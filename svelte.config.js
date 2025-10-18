@@ -1,8 +1,8 @@
 import adapter from '@sveltejs/adapter-static';
-import { vitePreprocess } from '@sveltejs/kit/vite';
+import sveltePreprocess from 'svelte-preprocess';
 
 const dev = process.argv.includes('dev');
-const base = dev ? '' : '/Myportfolio'; // ⚠️ Remplace NOM_DU_REPO par le nom de ton dépôt GitHub
+const base = dev ? '' : '/Myportfolio'; // ⚠️ Remplace par ton nom de repo GitHub
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -10,14 +10,13 @@ const config = {
     adapter: adapter({
       pages: 'build',
       assets: 'build',
-      fallback: 'index.html',
-      precompress: false
+      fallback: 'index.html'
     }),
     paths: {
       base
     }
   },
-  preprocess: vitePreprocess()
+  preprocess: sveltePreprocess()
 };
 
 export default config;
