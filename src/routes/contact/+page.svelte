@@ -1,101 +1,356 @@
 <script>
-  import { onMount } from 'svelte';
-  let name = '';
-  let email = '';
-  let message = '';
-  let formStatus = ''; // Pour afficher un message après l'envoi
-
-  // Fonction de validation
+  import { Motion } from 'svelte-motion';
+  
+  let name = $state('');
+  let email = $state('');
+  let message = $state('');
+  let formStatus = $state('');
+  let isSubmitting = $state(false);
+  let statusType = $state(''); // 'success' ou 'error'
+  
+  const contactInfo = [
+    {
+      icon: '📧',
+      title: 'Email',
+      value: 'contact@gabriel.dev',
+      link: 'mailto:contact@gabriel.dev',
+      color: 'from-blue-500 to-cyan-500'
+    },
+    {
+      icon: '📱',
+      title: 'Téléphone',
+      value: '+261 XX XXX XX XX',
+      link: 'tel:+261xxxxxxxxx',
+      color: 'from-green-500 to-emerald-500'
+    },
+    {
+      icon: '📍',
+      title: 'Localisation',
+      value: 'Antananarivo, Madagascar',
+      link: '#',
+      color: 'from-purple-500 to-pink-500'
+    },
+    {
+      icon: '💼',
+      title: 'LinkedIn',
+      value: 'Gabriel Dev',
+      link: '#',
+      color: 'from-blue-600 to-blue-400'
+    }
+  ];
+  
+  const socialLinks = [
+    { name: 'GitHub', icon: '💻', url: '#', color: 'hover:bg-gray-700' },
+    { name: 'LinkedIn', icon: '💼', url: '#', color: 'hover:bg-blue-600' },
+    { name: 'Twitter', icon: '🐦', url: '#', color: 'hover:bg-sky-500' },
+    { name: 'WhatsApp', icon: '💬', url: '#', color: 'hover:bg-green-600' }
+  ];
+  
+  // Validation du formulaire
   const validateForm = () => {
     if (!name || !email || !message) {
       formStatus = 'Tous les champs sont requis.';
+      statusType = 'error';
       return false;
     }
     if (!/\S+@\S+\.\S+/.test(email)) {
       formStatus = 'Veuillez entrer un email valide.';
+      statusType = 'error';
+      return false;
+    }
+    if (message.length < 10) {
+      formStatus = 'Le message doit contenir au moins 10 caractères.';
+      statusType = 'error';
       return false;
     }
     return true;
   };
-
+  
   // Envoi du formulaire
   const handleSubmit = async (event) => {
     event.preventDefault();
-    formStatus = ''; // Réinitialise le message de statut
-
-    // Validation du formulaire
+    formStatus = '';
+    statusType = '';
+    
     if (!validateForm()) {
       return;
     }
-
-    // Envoi via Formspree
-    const response = await fetch('https://formspree.io/f/mwkajnpg', {
-      method: 'POST',
-      body: new FormData(event.target),
-      headers: {
-        Accept: 'application/json',
-      },
-    });
-
-    if (response.ok) {
-      formStatus = 'Merci ! Votre message a été envoyé.';
-    } else {
-      formStatus = 'Erreur lors de l\'envoi du message. Veuillez réessayer.';
+    
+    isSubmitting = true;
+    
+    try {
+      const response = await fetch('https://formspree.io/f/mwkajnpg', {
+        method: 'POST',
+        body: new FormData(event.target),
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+      
+      if (response.ok) {
+        formStatus = '✓ Merci ! Votre message a été envoyé avec succès.';
+        statusType = 'success';
+        name = '';
+        email = '';
+        message = '';
+      } else {
+        formStatus = '✗ Erreur lors de l\'envoi. Veuillez réessayer.';
+        statusType = 'error';
+      }
+    } catch (error) {
+      formStatus = '✗ Erreur de connexion. Veuillez vérifier votre internet.';
+      statusType = 'error';
+    } finally {
+      isSubmitting = false;
     }
-
-    // Réinitialiser le formulaire après l'envoi
-    name = '';
-    email = '';
-    message = '';
   };
 </script>
 
-<section class="p-10">
-  <h2 class="text-3xl font-bold text-gray-800 dark:text-white">Contactez-moi</h2>
-  <form on:submit={handleSubmit} class="mt-6 space-y-4">
-    <div>
-      <label for="name" class="block text-sm font-medium text-gray-700 dark:text-black">Nom</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        bind:value={name}
-        class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
-        required
-      />
-    </div>
-    <div>
-      <label for="email" class="block text-sm font-medium text-gray-700 dark:text-black">Email</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        bind:value={email}
-        class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
-        required
-      />
-    </div>
-    <div>
-      <label for="message" class="block text-sm font-medium text-gray-700 dark:text-black">Message</label>
-      <textarea
-        id="message"
-        name="message"
-        bind:value={message}
-        class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
-        rows="4"
-        required
-      ></textarea>
-    </div>
+<Motion
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 0.6 }}
+>
+  <section class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 py-20 px-6">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Header -->
+      <Motion
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div class="text-center mb-16">
+          <h1 class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+            Contactez-moi
+          </h1>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            Vous avez un projet en tête ? Parlons-en ! Je suis toujours ouvert à de nouvelles opportunités et collaborations.
+          </p>
+        </div>
+      </Motion>
 
-    {#if formStatus}
-      <div class="text-sm mt-2 text-gray-600 dark:text-gray-300">{formStatus}</div>
-    {/if}
+      <!-- Contact Info Cards -->
+      <Motion
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {#each contactInfo as info, i}
+            <Motion
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
+            >
+              <a 
+                href={info.link}
+                class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl hover:scale-105 transition-all duration-300 block"
+              >
+                <div class="text-5xl mb-3">{info.icon}</div>
+                <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                  {info.title}
+                </h3>
+                <p class="text-lg font-bold bg-gradient-to-r {info.color} bg-clip-text text-transparent">
+                  {info.value}
+                </p>
+              </a>
+            </Motion>
+          {/each}
+        </div>
+      </Motion>
 
-    <button
-      type="submit"
-      class="mt-4 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-    >
-      Envoyer
-    </button>
-  </form>
-</section>
+      <div class="grid lg:grid-cols-2 gap-12">
+        
+        <!-- Formulaire -->
+        <Motion
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-10">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">
+              Envoyez-moi un message
+            </h2>
+            
+            <form onsubmit={handleSubmit} class="space-y-6">
+              <!-- Nom -->
+              <div>
+                <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
+                  Nom complet *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  bind:value={name}
+                  placeholder="Jean Dupont"
+                  class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+                  required
+                />
+              </div>
+
+              <!-- Email -->
+              <div>
+                <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+                  Adresse email *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  bind:value={email}
+                  placeholder="jean.dupont@exemple.com"
+                  class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+                  required
+                />
+              </div>
+
+              <!-- Message -->
+              <div>
+                <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">
+                  Votre message *
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  bind:value={message}
+                  placeholder="Décrivez votre projet ou votre demande..."
+                  rows="5"
+                  class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 resize-none"
+                  required
+                ></textarea>
+                <p class="text-xs text-gray-500 mt-1">Minimum 10 caractères</p>
+              </div>
+
+              <!-- Message de statut -->
+              {#if formStatus}
+                <Motion
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div class={`p-4 rounded-xl ${
+                    statusType === 'success' 
+                      ? 'bg-green-50 text-green-700 border-2 border-green-200' 
+                      : 'bg-red-50 text-red-700 border-2 border-red-200'
+                  }`}>
+                    <p class="font-semibold">{formStatus}</p>
+                  </div>
+                </Motion>
+              {/if}
+
+              <!-- Bouton Submit -->
+              <Motion
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  class={`w-full px-6 py-4 rounded-xl font-semibold text-white text-lg shadow-lg transition-all duration-300 ${
+                    isSubmitting
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-2xl'
+                  }`}
+                >
+                  {isSubmitting ? 'Envoi en cours...' : 'Envoyer le message'}
+                </button>
+              </Motion>
+            </form>
+          </div>
+        </Motion>
+
+        <!-- Informations complémentaires -->
+        <Motion
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+        >
+          <div class="space-y-8">
+            
+            <!-- Carte disponibilité -->
+            <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl shadow-2xl p-8 text-white">
+              <div class="flex items-center space-x-3 mb-4">
+                <span class="text-4xl">⚡</span>
+                <h3 class="text-2xl font-bold">Disponibilité</h3>
+              </div>
+              <p class="text-lg opacity-90 mb-6">
+                Je suis actuellement disponible pour de nouveaux projets freelance et des opportunités de collaboration.
+              </p>
+              <div class="space-y-3">
+                <div class="flex items-center space-x-3">
+                  <span class="text-2xl">✓</span>
+                  <span>Réponse sous 24h</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <span class="text-2xl">✓</span>
+                  <span>Consultation gratuite</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <span class="text-2xl">✓</span>
+                  <span>Devis personnalisé</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Réseaux sociaux -->
+            <div class="bg-white rounded-3xl shadow-2xl p-8">
+              <h3 class="text-2xl font-bold text-gray-900 mb-6">
+                Suivez-moi
+              </h3>
+              <div class="grid grid-cols-2 gap-4">
+                {#each socialLinks as social}
+                  <Motion
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <a
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class={`flex items-center space-x-3 p-4 bg-gray-100 rounded-xl ${social.color} transition-all duration-300`}
+                    >
+                      <span class="text-2xl">{social.icon}</span>
+                      <span class="font-semibold">{social.name}</span>
+                    </a>
+                  </Motion>
+                {/each}
+              </div>
+            </div>
+
+            <!-- FAQ rapide -->
+            <div class="bg-white rounded-3xl shadow-2xl p-8">
+              <h3 class="text-2xl font-bold text-gray-900 mb-6">
+                Questions fréquentes
+              </h3>
+              <div class="space-y-4">
+                <div>
+                  <p class="font-semibold text-gray-900 mb-1">Quels types de projets acceptez-vous ?</p>
+                  <p class="text-gray-600 text-sm">Applications web, sites vitrine, e-commerce, et solutions sur mesure.</p>
+                </div>
+                <div>
+                  <p class="font-semibold text-gray-900 mb-1">Quel est votre délai de réponse ?</p>
+                  <p class="text-gray-600 text-sm">Je réponds généralement dans les 24 heures ouvrées.</p>
+                </div>
+                <div>
+                  <p class="font-semibold text-gray-900 mb-1">Travaillez-vous à distance ?</p>
+                  <p class="text-gray-600 text-sm">Oui, je travaille avec des clients du monde entier.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </Motion>
+
+      </div>
+
+    </div>
+  </section>
+</Motion>
+
+<style>
+  section {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+</style>
