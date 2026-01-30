@@ -24,6 +24,8 @@
     'Développement Web',
     'Design UI/UX',
     'Applications Mobile',
+    'Traduction (FR/EN/MG)',
+    'Documentation',
     'Consulting',
     'Formation',
     'Support'
