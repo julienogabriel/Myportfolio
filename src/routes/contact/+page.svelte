@@ -258,6 +258,46 @@
                 </button>
               </Motion>
             </form>
+
+            <!-- Sections supplémentaires -->
+            <div class="mt-12 pt-8 border-t-2 border-gray-200 dark:border-gray-700">
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                Services additionnels
+              </h3>
+
+              <!-- Traduction -->
+              <div class="mb-8 p-6 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 rounded-xl">
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-3">🌍 Demander une Traduction</h4>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                  Traduction professionnelle entre Français, Anglais et Malgache
+                </p>
+                <a href="#" class="inline-block px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all font-semibold">
+                  Accédez au formulaire →
+                </a>
+              </div>
+
+              <!-- Documents -->
+              <div class="mb-8 p-6 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl">
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-3">📄 Mes Documents</h4>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                  Téléchargez CV, lettre de motivation et porfolio technique
+                </p>
+                <a href="#" class="inline-block px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all font-semibold">
+                  Télécharger les documents →
+                </a>
+              </div>
+
+              <!-- Feedback -->
+              <div class="p-6 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-xl">
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-3">⭐ Votre Feedback</h4>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                  Partagez votre avis pour nous aider à améliorer nos services
+                </p>
+                <a href="#" class="inline-block px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-all font-semibold">
+                  Donner votre avis →
+                </a>
+              </div>
+            </div>
           </div>
         </Motion>
 

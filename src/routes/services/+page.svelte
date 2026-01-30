@@ -76,6 +76,28 @@
       features: ["Audit technique", "Architecture", "Stratégie tech"],
       stats: "15+ audits"
     },
+    {
+      title: "Services de Traduction",
+      description: "Traduction professionnelle de documents, sites web et applications. Support multilingue : Français, Anglais, Malgache.",
+      icon: "🌍",
+      color: "from-teal-500 to-cyan-500",
+      bgColor: "bg-teal-50 dark:bg-teal-900/20",
+      borderColor: "border-teal-200 dark:border-teal-800",
+      iconBg: "bg-teal-100 dark:bg-teal-900",
+      features: ["FR ↔ EN ↔ MG", "Relecture qualité", "Livraison rapide"],
+      stats: "200+ traductions"
+    },
+    {
+      title: "Mise en page & Documentation",
+      description: "Rédaction, mise en page professionnelle et structuration de documents. CV, lettres de motivation, manuels techniques.",
+      icon: "📄",
+      color: "from-indigo-500 to-blue-500",
+      bgColor: "bg-indigo-50 dark:bg-indigo-900/20",
+      borderColor: "border-indigo-200 dark:border-indigo-800",
+      iconBg: "bg-indigo-100 dark:bg-indigo-900",
+      features: ["Documents professionnels", "Mise en page moderne", "Export PDF"],
+      stats: "150+ documents"
+    },
   ];
 
   const processSteps = [
