@@ -1,5 +1,6 @@
 <script>
   import { Motion } from "svelte-motion";
+  import { base } from '$app/paths';  // ← AJOUT IMPORTANT
   
   const skills = [
     { name: 'Svelte', level: 95, icon: '⚡', color: 'from-orange-500 to-red-500' },
@@ -29,7 +30,7 @@
   animate={{ opacity: 1 }}
   transition={{ duration: 0.6 }}
 >
-  <section class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 py-20 px-6">
+  <section class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20 py-20 px-6">
     <div class="max-w-7xl mx-auto">
       
       <!-- Hero Section -->
@@ -45,7 +46,7 @@
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <img 
-              src="/gaby.jpg" 
+              src="{base}/gaby.jpg" 
               alt="Gabriel" 
               class="w-32 h-32 md:w-40 md:h-40 rounded-full shadow-2xl mx-auto mb-6 ring-4 ring-blue-500 ring-offset-4 object-cover"
             />
@@ -54,10 +55,10 @@
           <h1 class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
             Gabriel
           </h1>
-          <p class="text-2xl md:text-3xl text-gray-700 font-semibold mb-2">
+          <p class="text-2xl md:text-3xl text-gray-700 dark:text-gray-300 font-semibold mb-2">
             Développeur Full-Stack
           </p>
-          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Passionné par la création d'applications modernes et performantes
           </p>
         </div>
@@ -76,12 +77,12 @@
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
             >
-              <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl hover:scale-105 transition-all duration-300">
+              <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl hover:scale-105 transition-all duration-300">
                 <div class="text-4xl mb-2">{stat.icon}</div>
                 <div class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-1">
                   {stat.number}
                 </div>
-                <div class="text-sm text-gray-600">{stat.label}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">{stat.label}</div>
               </div>
             </Motion>
           {/each}
@@ -94,18 +95,18 @@
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.5 }}
       >
-        <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 mb-16">
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+        <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 md:p-12 mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
             À propos de moi
           </h2>
-          <div class="space-y-4 text-lg text-gray-700 leading-relaxed">
+          <div class="space-y-4 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
             <p>
-              Je suis <strong class="text-blue-600">Gabriel</strong>, développeur full-stack avec une passion 
+              Je suis <strong class="text-blue-600 dark:text-blue-400">Gabriel</strong>, développeur full-stack avec une passion 
               pour la création d'applications web modernes et performantes. Mon expertise couvre un large 
               éventail de technologies, me permettant de concevoir des solutions complètes de A à Z.
             </p>
             <p>
-              Avec une maîtrise approfondie de <strong class="text-purple-600">Svelte, React, Angular, 
+              Avec une maîtrise approfondie de <strong class="text-purple-600 dark:text-purple-400">Svelte, React, Angular, 
               Laravel et Node.js</strong>, je transforme des idées complexes en applications intuitives 
               et élégantes. Mon approche combine innovation technique et design centré sur l'utilisateur.
             </p>
@@ -125,7 +126,7 @@
         transition={{ duration: 0.8, delay: 0.6 }}
       >
         <div class="mb-16">
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">
             Mes compétences
           </h2>
           <div class="space-y-6">
@@ -135,17 +136,17 @@
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 + i * 0.1 }}
               >
-                <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300">
                   <div class="flex items-center justify-between mb-3">
                     <div class="flex items-center space-x-3">
                       <span class="text-3xl">{skill.icon}</span>
-                      <span class="text-xl font-semibold text-gray-800">{skill.name}</span>
+                      <span class="text-xl font-semibold text-gray-800 dark:text-gray-200">{skill.name}</span>
                     </div>
                     <span class="text-2xl font-bold bg-gradient-to-r {skill.color} bg-clip-text text-transparent">
                       {skill.level}%
                     </span>
                   </div>
-                  <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                  <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
                     <Motion
                       initial={{ width: 0 }}
                       animate={{ width: `${skill.level}%` }}
@@ -168,7 +169,7 @@
         transition={{ duration: 0.8, delay: 0.8 }}
       >
         <div class="mb-16">
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">
             Mes valeurs
           </h2>
           <div class="grid md:grid-cols-2 gap-6">
@@ -178,10 +179,10 @@
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.9 + i * 0.1 }}
               >
-                <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 hover:shadow-2xl hover:scale-105 transition-all duration-300">
                   <div class="text-5xl mb-4">{value.icon}</div>
-                  <h3 class="text-2xl font-bold text-gray-900 mb-2">{value.title}</h3>
-                  <p class="text-gray-600">{value.description}</p>
+                  <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">{value.title}</h3>
+                  <p class="text-gray-600 dark:text-gray-400">{value.description}</p>
                 </div>
               </Motion>
             {/each}
@@ -201,15 +202,15 @@
             whileTap={{ scale: 0.95 }}
           >
             <a 
-              href="/projects" 
+              href="{base}/projects" 
               class="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-lg font-semibold rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-300"
             >
               <span>Découvrir mes projets</span>
               <span class="text-2xl">→</span>
             </a>
           </Motion>
-          <p class="mt-4 text-gray-600">
-            Ou <a href="/contact" class="text-blue-600 hover:text-purple-600 font-semibold underline">contactez-moi</a> directement
+          <p class="mt-4 text-gray-600 dark:text-gray-400">
+            Ou <a href="{base}/contact" class="text-blue-600 dark:text-blue-400 hover:text-purple-600 dark:hover:text-purple-400 font-semibold underline">contactez-moi</a> directement
           </p>
         </div>
       </Motion>
