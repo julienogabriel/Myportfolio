@@ -12,21 +12,21 @@
     {
       icon: '📧',
       title: 'Email',
-      value: 'contact@gabriel.dev',
-      link: 'mailto:contact@gabriel.dev',
+      value: 'julienogabriel4@gmail.com',
+      link: 'julienogabriel4@gmail.com',
       color: 'from-blue-500 to-cyan-500'
     },
     {
       icon: '📱',
       title: 'Téléphone',
-      value: '+261 XX XXX XX XX',
-      link: 'tel:+261xxxxxxxxx',
+      value: '+261 34 01 772 60',
+      link: 'tel:+2610177260',
       color: 'from-green-500 to-emerald-500'
     },
     {
       icon: '📍',
       title: 'Localisation',
-      value: 'Antananarivo, Madagascar',
+      value: 'FIANARANTSOA, Madagascar',
       link: '#',
       color: 'from-purple-500 to-pink-500'
     },
@@ -271,7 +271,7 @@
                 <p class="text-gray-600 dark:text-gray-400 mb-4">
                   Traduction professionnelle entre Français, Anglais et Malgache
                 </p>
-                <a href="#" class="inline-block px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all font-semibold">
+                <a href="/TraslationForm" class="inline-block px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all font-semibold">
                   Accédez au formulaire →
                 </a>
               </div>
@@ -293,7 +293,7 @@
                 <p class="text-gray-600 dark:text-gray-400 mb-4">
                   Partagez votre avis pour nous aider à améliorer nos services
                 </p>
-                <a href="#" class="inline-block px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-all font-semibold">
+                <a href="/FeedbackForm" class="inline-block px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-all font-semibold">
                   Donner votre avis →
                 </a>
               </div>
