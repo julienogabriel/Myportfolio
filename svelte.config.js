@@ -10,6 +10,7 @@ const config = {
     adapter: adapter({
       pages: 'build',
       assets: 'build',
+      fallback: '404.html',  // Changé de 'index.html' à '404.html'
       precompress: false,
       strict: true
     }),
@@ -17,7 +18,7 @@ const config = {
       base
     },
     prerender: {
-      entries: ['*']  // ← AJOUTEZ CECI pour pré-rendre toutes les pages
+      entries: ['*']
     }
   },
   preprocess: sveltePreprocess()
