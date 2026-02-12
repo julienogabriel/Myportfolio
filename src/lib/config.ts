@@ -7,9 +7,9 @@ export const siteConfig = {
   name: 'Gabriel Portfolio',
   description: 'Développeur Full-Stack - UI/UX Designer - Consultant IT',
   url: 'https://gabriel-portfolio.dev',
-  email: 'contact@gabriel.dev',
-  phone: '+261 XX XXX XX XX',
-  location: 'Antananarivo, Madagascar',
+  email: 'julienogabriel@gmail.com',
+  phone: '+261 34 01 772 60',
+  location: 'FIANARANTSOA, Madagascar',
   
   // Réseaux sociaux
   social: {
@@ -81,6 +81,7 @@ export const siteConfig = {
   // Technologies
   technologies: [
     { name: 'React', icon: '⚛️' },
+    {name:'Angular', icon:'⚛️'},
     { name: 'Svelte', icon: '🔥' },
     { name: 'Node.js', icon: '🟢' },
     { name: 'TypeScript', icon: '📘' },
