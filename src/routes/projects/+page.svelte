@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { base } from '$app/paths';  // ← AJOUT IMPORTANT
   
   // Données des projets enrichies
   let projects = [
@@ -8,7 +9,7 @@
       title: 'Dashboard Analytics', 
       category: 'Web', 
       description: 'Tableau de bord interactif avec visualisation de données en temps réel',
-      image: 'Dashbord.PNG',
+      image: `${base}/Dashbord.PNG`,  // ← Corrigé
       tags: ['React', 'D3.js', 'API'],
       link: '#',
       featured: true
@@ -237,9 +238,9 @@
       <p class="text-blue-100 mb-8 max-w-2xl mx-auto">
         Travaillons ensemble pour donner vie à vos idées. Contactez-moi pour discuter de votre prochain projet.
       </p>
-      <button class="px-8 py-4 bg-white text-blue-600 font-bold rounded-full hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg">
+      <a href="{base}/contact" class="inline-block px-8 py-4 bg-white text-blue-600 font-bold rounded-full hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg">
         Me contacter
-      </button>
+      </a>
     </div>
   </div>
 </section>

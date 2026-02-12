@@ -1,6 +1,7 @@
 <script>
   import { Motion } from "svelte-motion";
   import { onMount } from "svelte";
+  import { base } from '$app/paths';  // ← AJOUT IMPORTANT
 
   let name = "Gabriel";
   let typedText = "";
@@ -61,12 +62,7 @@
 
   // Scroll vers les projets
   const scrollToProjects = () => {
-    const projectsSection = document.getElementById('projects');
-    if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.location.href = '/projects';
-    }
+    window.location.href = `${base}/projects`;
   };
 </script>
 
@@ -182,7 +178,7 @@
           transition={{ duration: 0.2 }}
         >
           <a 
-            href="/contact"
+            href="{base}/contact"
             class="px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-lg border-2 border-gray-200 dark:border-gray-700"
           >
             Me contacter

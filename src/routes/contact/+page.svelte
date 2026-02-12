@@ -1,5 +1,6 @@
 <script>
   import { Motion } from 'svelte-motion';
+  import { base } from '$app/paths';  // ← AJOUT IMPORTANT
   
   let name = $state('');
   let email = $state('');
@@ -13,21 +14,21 @@
       icon: '📧',
       title: 'Email',
       value: 'julienogabriel4@gmail.com',
-      link: 'julienogabriel4@gmail.com',
+      link: 'mailto:julienogabriel4@gmail.com',  // ← Corrigé: mailto:
       color: 'from-blue-500 to-cyan-500'
     },
     {
       icon: '📱',
       title: 'Téléphone',
       value: '+261 34 01 772 60',
-      link: 'tel:+2610177260',
+      link: 'tel:+261340177260',  // ← Corrigé
       color: 'from-green-500 to-emerald-500'
     },
     {
       icon: '📍',
       title: 'Localisation',
       value: 'FIANARANTSOA, Madagascar',
-      link: '#',
+      link: 'https://www.google.com/maps/place/Fianarantsoa,+Madagascar',
       color: 'from-purple-500 to-pink-500'
     },
     {
@@ -43,7 +44,7 @@
     { name: 'GitHub', icon: '💻', url: '#', color: 'hover:bg-gray-700' },
     { name: 'LinkedIn', icon: '💼', url: '#', color: 'hover:bg-blue-600' },
     { name: 'Twitter', icon: '🐦', url: '#', color: 'hover:bg-sky-500' },
-    { name: 'WhatsApp', icon: '💬', url: '#', color: 'hover:bg-green-600' }
+    { name: 'WhatsApp', icon: '💬', url: 'https://wa.me/261340177260', color: 'hover:bg-green-600' }
   ];
   
   // Validation du formulaire
@@ -111,7 +112,7 @@
   animate={{ opacity: 1 }}
   transition={{ duration: 0.6 }}
 >
-  <section class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 py-20 px-6">
+  <section class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-20 px-6">
     <div class="max-w-7xl mx-auto">
       
       <!-- Header -->
@@ -124,7 +125,7 @@
           <h1 class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
             Contactez-moi
           </h1>
-          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Vous avez un projet en tête ? Parlons-en ! Je suis toujours ouvert à de nouvelles opportunités et collaborations.
           </p>
         </div>
@@ -145,10 +146,12 @@
             >
               <a 
                 href={info.link}
-                class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl hover:scale-105 transition-all duration-300 block"
+                target={info.link.startsWith('http') ? '_blank' : undefined}
+                rel={info.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 hover:shadow-2xl hover:scale-105 transition-all duration-300 block"
               >
                 <div class="text-5xl mb-3">{info.icon}</div>
-                <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">
                   {info.title}
                 </h3>
                 <p class="text-lg font-bold bg-gradient-to-r {info.color} bg-clip-text text-transparent">
@@ -168,15 +171,15 @@
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-10">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6">
+          <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 md:p-10">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
               Envoyez-moi un message
             </h2>
             
             <form onsubmit={handleSubmit} class="space-y-6">
               <!-- Nom -->
               <div>
-                <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
+                <label for="name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   Nom complet *
                 </label>
                 <input
@@ -185,14 +188,14 @@
                   name="name"
                   bind:value={name}
                   placeholder="Jean Dupont"
-                  class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+                  class="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
                   required
                 />
               </div>
 
               <!-- Email -->
               <div>
-                <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+                <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   Adresse email *
                 </label>
                 <input
@@ -201,14 +204,14 @@
                   name="email"
                   bind:value={email}
                   placeholder="jean.dupont@exemple.com"
-                  class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+                  class="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
                   required
                 />
               </div>
 
               <!-- Message -->
               <div>
-                <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">
+                <label for="message" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                   Votre message *
                 </label>
                 <textarea
@@ -217,10 +220,10 @@
                   bind:value={message}
                   placeholder="Décrivez votre projet ou votre demande..."
                   rows="5"
-                  class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 resize-none"
+                  class="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 resize-none"
                   required
                 ></textarea>
-                <p class="text-xs text-gray-500 mt-1">Minimum 10 caractères</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Minimum 10 caractères</p>
               </div>
 
               <!-- Message de statut -->
@@ -232,8 +235,8 @@
                 >
                   <div class={`p-4 rounded-xl ${
                     statusType === 'success' 
-                      ? 'bg-green-50 text-green-700 border-2 border-green-200' 
-                      : 'bg-red-50 text-red-700 border-2 border-red-200'
+                      ? 'bg-green-50 text-green-700 border-2 border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800' 
+                      : 'bg-red-50 text-red-700 border-2 border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800'
                   }`}>
                     <p class="font-semibold">{formStatus}</p>
                   </div>
@@ -271,7 +274,7 @@
                 <p class="text-gray-600 dark:text-gray-400 mb-4">
                   Traduction professionnelle entre Français, Anglais et Malgache
                 </p>
-                <a href="/TraslationForm" class="inline-block px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all font-semibold">
+                <a href="{base}/TraslationForm" class="inline-block px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all font-semibold">
                   Accédez au formulaire →
                 </a>
               </div>
@@ -293,7 +296,7 @@
                 <p class="text-gray-600 dark:text-gray-400 mb-4">
                   Partagez votre avis pour nous aider à améliorer nos services
                 </p>
-                <a href="/FeedbackForm" class="inline-block px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-all font-semibold">
+                <a href="{base}/FeedbackForm" class="inline-block px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-all font-semibold">
                   Donner votre avis →
                 </a>
               </div>
@@ -335,8 +338,8 @@
             </div>
 
             <!-- Réseaux sociaux -->
-            <div class="bg-white rounded-3xl shadow-2xl p-8">
-              <h3 class="text-2xl font-bold text-gray-900 mb-6">
+            <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8">
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                 Suivez-moi
               </h3>
               <div class="grid grid-cols-2 gap-4">
@@ -349,10 +352,10 @@
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class={`flex items-center space-x-3 p-4 bg-gray-100 rounded-xl ${social.color} transition-all duration-300`}
+                      class={`flex items-center space-x-3 p-4 bg-gray-100 dark:bg-gray-700 rounded-xl ${social.color} transition-all duration-300`}
                     >
                       <span class="text-2xl">{social.icon}</span>
-                      <span class="font-semibold">{social.name}</span>
+                      <span class="font-semibold text-gray-900 dark:text-white">{social.name}</span>
                     </a>
                   </Motion>
                 {/each}
@@ -360,22 +363,22 @@
             </div>
 
             <!-- FAQ rapide -->
-            <div class="bg-white rounded-3xl shadow-2xl p-8">
-              <h3 class="text-2xl font-bold text-gray-900 mb-6">
+            <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8">
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                 Questions fréquentes
               </h3>
               <div class="space-y-4">
                 <div>
-                  <p class="font-semibold text-gray-900 mb-1">Quels types de projets acceptez-vous ?</p>
-                  <p class="text-gray-600 text-sm">Applications web, sites vitrine, e-commerce, et solutions sur mesure.</p>
+                  <p class="font-semibold text-gray-900 dark:text-white mb-1">Quels types de projets acceptez-vous ?</p>
+                  <p class="text-gray-600 dark:text-gray-400 text-sm">Applications web, sites vitrine, e-commerce, et solutions sur mesure.</p>
                 </div>
                 <div>
-                  <p class="font-semibold text-gray-900 mb-1">Quel est votre délai de réponse ?</p>
-                  <p class="text-gray-600 text-sm">Je réponds généralement dans les 24 heures ouvrées.</p>
+                  <p class="font-semibold text-gray-900 dark:text-white mb-1">Quel est votre délai de réponse ?</p>
+                  <p class="text-gray-600 dark:text-gray-400 text-sm">Je réponds généralement dans les 24 heures ouvrées.</p>
                 </div>
                 <div>
-                  <p class="font-semibold text-gray-900 mb-1">Travaillez-vous à distance ?</p>
-                  <p class="text-gray-600 text-sm">Oui, je travaille avec des clients du monde entier.</p>
+                  <p class="font-semibold text-gray-900 dark:text-white mb-1">Travaillez-vous à distance ?</p>
+                  <p class="text-gray-600 dark:text-gray-400 text-sm">Oui, je travaille avec des clients du monde entier.</p>
                 </div>
               </div>
             </div>
