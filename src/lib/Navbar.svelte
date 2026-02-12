@@ -3,6 +3,8 @@
   import { cubicOut } from 'svelte/easing';
   import { fade, fly, scale } from 'svelte/transition';
   import { onMount, onDestroy } from 'svelte';
+  import { base } from '$app/paths';  // ← AJOUT IMPORTANT
+  import { page } from '$app/stores';  // ← AJOUT IMPORTANT
   import '../app.css';
   
   let isOpen = $state(false);
@@ -31,7 +33,7 @@
     activeSection = href;
     isOpen = false;
     // Scroll doux vers le haut si on est déjà sur la page
-    if (window.location.pathname === href) {
+    if (window.location.pathname === `${base}${href}`) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
@@ -61,8 +63,9 @@
     });
     
     // Pour les pages individuelles
-    if (window.location.pathname !== '/') {
-      current = window.location.pathname;
+    const currentPath = window.location.pathname.replace(base, '') || '/';
+    if (currentPath !== '/') {
+      current = currentPath;
     }
     
     activeSection = current;
@@ -90,9 +93,9 @@
       handleScroll(); // Initial check
       
       // Détection initiale de la section active
-      const path = window.location.pathname;
+      const path = window.location.pathname.replace(base, '') || '/';
       const hash = window.location.hash;
-      activeSection = hash ? `/${hash}` : path || '/';
+      activeSection = hash ? `/${hash}` : path;
     }
   });
   
@@ -118,7 +121,7 @@
     <div class="flex justify-between items-center">
       <!-- Logo avec animation améliorée -->
       <a 
-        href="/" 
+        href="{base}/"
         onclick={() => setActive('/')}
         class="flex items-center space-x-3 group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg p-1"
         aria-label="Accueil - Retour à la page principale"
@@ -142,7 +145,7 @@
         {#each navItems as item}
           <li role="none">
             <a 
-              href={item.href} 
+              href="{base}{item.href}"
               onclick={() => setActive(item.href)}
               class={`px-4 py-2.5 rounded-lg font-medium transition-all duration-300 relative group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                 activeSection === item.href 
@@ -182,7 +185,7 @@
       <!-- CTA Desktop amélioré -->
       <div class="hidden md:block relative group">
         <a 
-          href="/contact" 
+          href="{base}/contact"
           class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-xl hover:scale-105 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center space-x-2 shadow-lg"
         >
           <span>Me contacter</span>
@@ -252,7 +255,7 @@
             }}
           >
             <a 
-              href={item.href}
+              href="{base}{item.href}"
               onclick={() => setActive(item.href)}
               class={`flex items-center space-x-4 px-4 py-3 rounded-xl font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                 activeSection === item.href
@@ -279,7 +282,7 @@
       <!-- CTA Mobile amélioré -->
       <div class="px-4 pb-4">
         <a 
-          href="/contact"
+          href="{base}/contact"
           onclick={() => setActive('/contact')}
           class="block w-full px-6 py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center space-x-2 group"
         >
