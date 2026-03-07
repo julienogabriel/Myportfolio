@@ -3,9 +3,7 @@
   import { cubicOut } from 'svelte/easing';
   import { fade, fly, scale } from 'svelte/transition';
   import { onMount, onDestroy } from 'svelte';
-  import { base } from '$app/paths';  // ← AJOUT IMPORTANT
-  import { page } from '$app/stores';  // ← AJOUT IMPORTANT
-  import '../app.css';
+  import { base } from '$app/paths';
   
   let isOpen = $state(false);
   let scrolled = $state(false);
@@ -13,11 +11,12 @@
   let isDesktop = $state(false);
   
   const navItems = [
-    { href: '/', label: 'Accueil', icon: '🏠' },
-    { href: '/about', label: 'À propos', icon: '👤' },
-    { href: '/projects', label: 'Projets', icon: '💼' },
-    { href: '/services', label: 'Services', icon: '⚡' },
-    { href: '/contact', label: 'Contact', icon: '📧' }
+    { href: '/', label: 'Accueil' },
+    { href: '/about', label: 'À propos' },
+    { href: '/projects', label: 'Projets' },
+    { href: '/services', label: 'Services' },
+    { href: '/blog', label: 'Blog' },
+    { href: '/contact', label: 'Contact' }
   ];
   
   function toggleMenu() {
@@ -109,12 +108,11 @@
 </script>
 
 <nav 
-  class={`fixed top-0 w-full z-50 transition-all duration-300 ${
-    scrolled 
-      ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg py-3' 
-      : 'bg-white dark:bg-gray-900 shadow-md py-4 dark:shadow-gray-800/30'
+  class={`fixed top-0 w-full z-50 transition-all duration-500 ${
+    scrolled
+      ? 'bg-white/85 dark:bg-gray-900/85 backdrop-blur-xl shadow-lg shadow-gray-200/50 dark:shadow-black/30 py-2.5 border-b border-gray-200/50 dark:border-gray-700/50'
+      : 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm py-4 border-b border-transparent'
   }`}
-  role="navigation"
   aria-label="Navigation principale"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -127,15 +125,14 @@
         aria-label="Accueil - Retour à la page principale"
       >
         <div class="relative">
-          <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 group-hover:rotate-12 shadow-lg group-hover:shadow-xl">
-            <span class="text-white font-bold text-xl">MP</span>
+          <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center transform group-hover:scale-105 transition-all duration-300 shadow-sm">
+            <span class="text-white font-bold text-lg tracking-tight">G</span>
           </div>
-          <div class="absolute -inset-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl opacity-0 group-hover:opacity-20 blur-lg transition-opacity duration-500 -z-10"></div>
         </div>
         <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hidden sm:block tracking-tight">
-          Mon Portfolio
-          <span class="block text-xs font-normal text-gray-500 dark:text-gray-400 mt-0.5">
-            Développeur Full-Stack
+          Gabriel
+          <span class="block text-[11px] font-medium text-gray-400 dark:text-gray-500 mt-0.5 tracking-wider uppercase">
+            Full-Stack Dev
           </span>
         </span>
       </a>
@@ -155,45 +152,33 @@
               role="menuitem"
               aria-current={activeSection === item.href ? 'page' : undefined}
             >
-              <span class="flex items-center space-x-2">
-                <span class="text-lg opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-                  {item.icon}
-                </span>
-                <span>{item.label}</span>
-              </span>
-              
+              <span>{item.label}</span>
+
               <!-- Indicateur de section active -->
               {#if activeSection === item.href}
-                <span 
-                  class="absolute bottom-0 left-1/2 -translate-x-1/2 w-10 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"
+                <span
+                  class="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"
                   transition:scale={{ duration: 300 }}
                 ></span>
               {:else}
-                <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full group-hover:w-10 transition-all duration-300"></span>
+                <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full group-hover:w-8 transition-all duration-300"></span>
               {/if}
-              
-              <!-- Tooltip au survol -->
-              <span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-900 dark:bg-gray-800 text-white text-xs py-1.5 px-3 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
-                {item.label}
-                <span class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 rotate-45 w-2 h-2 bg-gray-900 dark:bg-gray-800"></span>
-              </span>
             </a>
           </li>
         {/each}
       </ul>
       
-      <!-- CTA Desktop amélioré -->
-      <div class="hidden md:block relative group">
-        <a 
+      <!-- CTA Desktop -->
+      <div class="hidden md:block">
+        <a
           href="{base}/contact"
-          class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-xl hover:scale-105 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center space-x-2 shadow-lg"
+          class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold hover:shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center space-x-2 text-sm"
         >
           <span>Me contacter</span>
-          <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
           </svg>
         </a>
-        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-0 group-hover:opacity-30 -z-10 transition-opacity duration-500"></div>
       </div>
       
       <!-- Bouton menu burger amélioré avec animations -->
@@ -215,12 +200,6 @@
         <span 
           class={`w-6 h-0.5 bg-gray-800 dark:bg-gray-200 transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-2' : ''}`}
         ></span>
-        
-        <!-- Points d'animation -->
-        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-          <span class="absolute w-1 h-1 bg-blue-600 rounded-full animate-ping"></span>
-          <span class="absolute w-1 h-1 bg-purple-600 rounded-full animate-ping animation-delay-150"></span>
-        </div>
       </button>
     </div>
   </div>
@@ -239,7 +218,7 @@
     <div 
       id="mobile-menu"
       transition:fly={{ y: -20, duration: 300, easing: cubicOut }}
-      class="md:hidden fixed top-20 left-4 right-4 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl z-50 border border-gray-200 dark:border-gray-700 overflow-hidden"
+      class="md:hidden fixed top-20 left-4 right-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl shadow-gray-300/30 dark:shadow-black/40 z-50 border border-gray-200/80 dark:border-gray-700/80 overflow-hidden"
       role="dialog"
       aria-modal="true"
       aria-label="Menu mobile"
@@ -264,7 +243,6 @@
               }`}
               aria-current={activeSection === item.href ? 'page' : undefined}
             >
-              <span class="text-2xl w-8 text-center">{item.icon}</span>
               <span class="flex-1">{item.label}</span>
               {#if activeSection === item.href}
                 <span class="w-2 h-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full animate-pulse"></span>
@@ -284,7 +262,7 @@
         <a 
           href="{base}/contact"
           onclick={() => setActive('/contact')}
-          class="block w-full px-6 py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center space-x-2 group"
+          class="flex w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 items-center justify-center space-x-2 group"
         >
           <span>Me contacter</span>
           <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -300,45 +278,18 @@
 </nav>
 
 <!-- Espace pour le contenu fixé sous la navbar -->
-<div class="h-16 md:h-20"></div>
+<div class="h-[60px] md:h-[72px]"></div>
 
 <style>
   :global(html) {
-    scroll-behavior: smooth;
     scroll-padding-top: 5rem;
   }
-  
-  nav {
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-  }
-  
-  /* Animation delay utilities */
+
   .animation-delay-150 {
     animation-delay: 150ms;
   }
-  
+
   .animation-delay-300 {
     animation-delay: 300ms;
-  }
-  
-  /* Focus styles */
-  *:focus-visible {
-    outline: 2px solid #3b82f6;
-    outline-offset: 2px;
-  }
-  
-  /* Smooth transitions */
-  * {
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-  }
-  
-  /* Optimisation des animations */
-  @media (prefers-reduced-motion: reduce) {
-    * {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
   }
 </style>

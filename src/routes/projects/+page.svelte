@@ -1,64 +1,64 @@
 <script>
   import { onMount } from 'svelte';
-  import { base } from '$app/paths';  // ← AJOUT IMPORTANT
-  
-  // Données des projets enrichies
+  import { base } from '$app/paths';
+  import AdBanner from '$lib/AdBanner.svelte';
+
   let projects = [
-    { 
-      id: 1, 
-      title: 'Dashboard Analytics', 
-      category: 'Web', 
-      description: 'Tableau de bord interactif avec visualisation de données en temps réel',
-      image: `${base}/Dashbord.PNG`,  // ← Corrigé
-      tags: ['React', 'D3.js', 'API'],
+    {
+      id: 1,
+      title: 'Dashboard Analytics',
+      category: 'Web',
+      description: 'Tableau de bord interactif avec visualisation de données en temps réel et gestion multi-utilisateurs.',
+      image: `${base}/Dashbord.PNG`,
+      tags: ['React', 'D3.js', 'API REST'],
       link: '#',
       featured: true
     },
-    { 
-      id: 2, 
-      title: 'App Mobile E-Commerce', 
-      category: 'Mobile', 
-      description: 'Application mobile cross-platform avec paiement intégré',
+    {
+      id: 2,
+      title: 'App Mobile E-Commerce',
+      category: 'Mobile',
+      description: 'Application mobile cross-platform avec catalogue produits, panier et paiement intégré.',
       image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=600&fit=crop',
       tags: ['React Native', 'Firebase'],
       link: '#',
       featured: false
     },
-    { 
-      id: 3, 
-      title: 'Prédiction IA', 
-      category: 'AI', 
-      description: 'Modèle de machine learning pour l\'analyse prédictive avancée',
+    {
+      id: 3,
+      title: 'Modèle de Prédiction IA',
+      category: 'AI',
+      description: 'Système d\'analyse prédictive pour l\'optimisation de processus métier.',
       image: 'https://images.unsplash.com/photo-1555255707-c07966088b7b?w=800&h=600&fit=crop',
       tags: ['Python', 'TensorFlow', 'API'],
       link: '#',
       featured: true
     },
-    { 
-      id: 4, 
-      title: 'Portfolio Créatif', 
-      category: 'Web', 
-      description: 'Site portfolio avec animations 3D et transitions fluides',
+    {
+      id: 4,
+      title: 'Portfolio Créatif',
+      category: 'Web',
+      description: 'Site portfolio avec animations fluides et optimisation des performances.',
       image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&h=600&fit=crop',
-      tags: ['Three.js', 'GSAP', 'Svelte'],
+      tags: ['Svelte', 'GSAP', 'Tailwind'],
       link: '#',
       featured: false
     },
-    { 
-      id: 5, 
-      title: 'Task Manager Pro', 
-      category: 'Mobile', 
-      description: 'Gestionnaire de tâches collaboratif avec synchronisation cloud',
+    {
+      id: 5,
+      title: 'Task Manager Pro',
+      category: 'Mobile',
+      description: 'Gestionnaire de tâches collaboratif avec synchronisation cloud en temps réel.',
       image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=600&fit=crop',
       tags: ['Swift', 'CloudKit'],
       link: '#',
       featured: false
     },
-    { 
-      id: 6, 
-      title: 'Chatbot IA', 
-      category: 'AI', 
-      description: 'Assistant virtuel intelligent avec traitement du langage naturel',
+    {
+      id: 6,
+      title: 'Chatbot Intelligent',
+      category: 'AI',
+      description: 'Assistant conversationnel avec traitement du langage naturel et apprentissage continu.',
       image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&h=600&fit=crop',
       tags: ['NLP', 'Python', 'OpenAI'],
       link: '#',
@@ -66,159 +66,136 @@
     },
   ];
 
-  let activeCategory = 'All';
-  let isVisible = false;
-  let searchQuery = '';
+  let activeCategory = $state('All');
+  let searchQuery = $state('');
+  let isVisible = $state(false);
 
   onMount(() => {
     setTimeout(() => isVisible = true, 100);
   });
 
-  const filterProjects = (category) => {
-    activeCategory = category;
-  };
-
-  $: filteredProjects = projects.filter(project => {
+  const filteredProjects = $derived(projects.filter(project => {
     const matchesCategory = activeCategory === 'All' || project.category === activeCategory;
-    const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          project.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
-  });
+  }));
 
   const categories = [
-    { name: 'All', label: 'Tous les projets', icon: '🎯' },
-    { name: 'Web', label: 'Web', icon: '🌐' },
-    { name: 'Mobile', label: 'Mobile', icon: '📱' },
-    { name: 'AI', label: 'Intelligence Artificielle', icon: '🤖' }
+    { name: 'All', label: 'Tous' },
+    { name: 'Web', label: 'Web' },
+    { name: 'Mobile', label: 'Mobile' },
+    { name: 'AI', label: 'IA' }
   ];
 </script>
 
-<section class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-16 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-7xl mx-auto">
-    <!-- En-tête -->
-    <div class="text-center mb-12 transform transition-all duration-700 {isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}">
-      <h2 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 mb-4">
-        Mes Projets
-      </h2>
-      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-        Découvrez une sélection de mes réalisations récentes en développement web, mobile et intelligence artificielle
+<section class="min-h-screen bg-white dark:bg-gray-950 py-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Header -->
+    <div class="text-center mb-12 transform transition-all duration-500 {isVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'}">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        Mes réalisations
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">
+        Une sélection de projets récents en développement web, mobile et intelligence artificielle.
       </p>
-      
-      <!-- Barre de recherche -->
-      <div class="mt-8 max-w-md mx-auto">
+
+      <!-- Recherche -->
+      <div class="max-w-md mx-auto mb-8">
         <div class="relative">
+          <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
           <input
             type="text"
             bind:value={searchQuery}
             placeholder="Rechercher un projet..."
-            class="w-full px-6 py-3 pl-12 rounded-full border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:border-blue-500 focus:outline-none transition-all duration-300"
+            class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none transition-all duration-200 text-sm"
           />
-          <span class="absolute left-4 top-3.5 text-gray-400 text-xl">🔍</span>
         </div>
       </div>
-    </div>
 
-    <!-- Statistiques -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
-        <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">{projects.length}</div>
-        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Projets réalisés</div>
-      </div>
-      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
-        <div class="text-3xl font-bold text-green-600 dark:text-green-400">{projects.filter(p => p.category === 'Web').length}</div>
-        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Sites Web</div>
-      </div>
-      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
-        <div class="text-3xl font-bold text-purple-600 dark:text-purple-400">{projects.filter(p => p.category === 'Mobile').length}</div>
-        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Apps Mobile</div>
-      </div>
-      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform duration-300">
-        <div class="text-3xl font-bold text-orange-600 dark:text-orange-400">{projects.filter(p => p.category === 'AI').length}</div>
-        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Projets IA</div>
-      </div>
-    </div>
-
-    <!-- Filtres de catégories -->
-    <div class="flex flex-wrap justify-center gap-3 mb-12">
-      {#each categories as cat}
-        <button
-          on:click={() => filterProjects(cat.name)}
-          class="group px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 {activeCategory === cat.name 
-            ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg' 
-            : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md'}"
-        >
-          <span class="mr-2">{cat.icon}</span>
-          {cat.label}
-          {#if cat.name !== 'All'}
-            <span class="ml-2 px-2 py-0.5 text-xs rounded-full {activeCategory === cat.name ? 'bg-white/20' : 'bg-gray-200 dark:bg-gray-700'}">
-              {projects.filter(p => p.category === cat.name).length}
-            </span>
-          {/if}
-        </button>
-      {/each}
-    </div>
-
-    <!-- Grille de projets -->
-    {#if filteredProjects.length > 0}
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {#each filteredProjects as project, i}
-          <div 
-            class="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
-            style="animation: fadeInUp 0.6s ease-out {i * 0.1}s both"
+      <!-- Filtres -->
+      <div class="flex justify-center gap-2">
+        {#each categories as cat}
+          <button
+            onclick={() => activeCategory = cat.name}
+            class="px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 {activeCategory === cat.name
+              ? 'bg-blue-600 hover:bg-blue-700 text-white'
+              : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'}"
           >
-            <!-- Image du projet -->
-            <div class="relative overflow-hidden h-48 bg-gradient-to-br from-blue-500 to-purple-600">
-              <img 
-                src={project.image} 
+            {cat.label}
+            {#if cat.name !== 'All'}
+              <span class="ml-1 text-xs opacity-60">
+                {projects.filter(p => p.category === cat.name).length}
+              </span>
+            {/if}
+          </button>
+        {/each}
+      </div>
+    </div>
+
+    <!-- Grille -->
+    {#if filteredProjects.length > 0}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {#each filteredProjects as project, i}
+          <div
+            class="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700 hover:shadow-lg transition-all duration-300"
+            style="animation: fadeUp 0.5s ease-out {i * 0.08}s both"
+          >
+            <!-- Image -->
+            <div class="relative overflow-hidden h-48 bg-gray-100 dark:bg-gray-800">
+              <img
+                src={project.image}
                 alt={project.title}
                 loading="lazy"
-                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                on:error={(e) => e.target.style.display = 'none'}
+                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                onerror={(e) => e.target.style.display = 'none'}
               />
               {#if project.featured}
-                <div class="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-bold">
-                  ⭐ Featured
+                <div class="absolute top-3 right-3 bg-blue-600 text-white px-2.5 py-1 rounded-md text-xs font-semibold">
+                  Mis en avant
                 </div>
               {/if}
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
 
             <!-- Contenu -->
-            <div class="p-6">
-              <div class="flex items-center justify-between mb-3">
-                <span class="px-3 py-1 text-xs font-semibold rounded-full {
-                  project.category === 'Web' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-                  project.category === 'Mobile' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' :
-                  'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
+            <div class="p-5">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2 py-0.5 text-xs font-medium rounded {
+                  project.category === 'Web' ? 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300' :
+                  project.category === 'Mobile' ? 'bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300' :
+                  'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300'
                 }">
                   {project.category}
                 </span>
               </div>
 
-              <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                 {project.title}
               </h3>
-              
-              <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
+
+              <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
                 {project.description}
               </p>
 
-              <!-- Tags -->
-              <div class="flex flex-wrap gap-2 mb-4">
+              <div class="flex flex-wrap gap-1.5 mb-4">
                 {#each project.tags as tag}
-                  <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">
+                  <span class="px-2 py-0.5 bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs rounded border border-gray-100 dark:border-gray-700">
                     {tag}
                   </span>
                 {/each}
               </div>
 
-              <!-- Bouton d'action -->
-              <a 
+              <a
                 href={project.link}
-                class="inline-flex items-center text-blue-600 dark:text-blue-400 font-semibold hover:gap-2 transition-all duration-300 group/link"
+                class="inline-flex items-center text-sm text-blue-600 dark:text-blue-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-colors group/link"
               >
                 Voir le projet
-                <span class="ml-1 transform group-hover/link:translate-x-1 transition-transform duration-300">→</span>
+                <svg class="w-4 h-4 ml-1 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
               </a>
             </div>
           </div>
@@ -226,19 +203,26 @@
       </div>
     {:else}
       <div class="text-center py-20">
-        <div class="text-6xl mb-4">🔍</div>
-        <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Aucun projet trouvé</h3>
-        <p class="text-gray-600 dark:text-gray-400">Essayez de modifier vos critères de recherche</p>
+        <svg class="w-16 h-16 mx-auto text-gray-300 dark:text-gray-700 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-1">Aucun projet trouvé</h3>
+        <p class="text-gray-500 dark:text-gray-400 text-sm">Essayez de modifier vos critères de recherche.</p>
       </div>
     {/if}
 
-    <!-- Call to action -->
-    <div class="mt-16 text-center bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-12 shadow-2xl">
-      <h3 class="text-3xl font-bold text-white mb-4">Vous avez un projet en tête ?</h3>
-      <p class="text-blue-100 mb-8 max-w-2xl mx-auto">
-        Travaillons ensemble pour donner vie à vos idées. Contactez-moi pour discuter de votre prochain projet.
+    <!-- Publicité -->
+    <div class="mt-12">
+      <AdBanner format="horizontal" slot="2345678901" />
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-8 text-center bg-gray-50 dark:bg-gray-900 rounded-2xl p-10 border border-gray-100 dark:border-gray-800">
+      <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Vous avez un projet en tête ?</h3>
+      <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-lg mx-auto">
+        Discutons de votre idée et voyons comment je peux vous aider à la concrétiser.
       </p>
-      <a href="{base}/contact" class="inline-block px-8 py-4 bg-white text-blue-600 font-bold rounded-full hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg">
+      <a href="{base}/contact" class="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl hover:shadow-md transition-all duration-200">
         Me contacter
       </a>
     </div>
@@ -246,10 +230,10 @@
 </section>
 
 <style>
-  @keyframes fadeInUp {
+  @keyframes fadeUp {
     from {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(20px);
     }
     to {
       opacity: 1;

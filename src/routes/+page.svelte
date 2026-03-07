@@ -1,40 +1,37 @@
 <script>
   import { Motion } from "svelte-motion";
   import { onMount } from "svelte";
-  import { base } from '$app/paths';  // ← AJOUT IMPORTANT
+  import { base } from '$app/paths';
+  import AdBanner from '$lib/AdBanner.svelte';
 
-  let name = "Gabriel";
   let typedText = "";
   let currentRoleIndex = 0;
   let isDeleting = false;
   let typeSpeed = 150;
-  
+
   const roles = [
     "Développeur Full-Stack",
-    "Expert UI/UX",
-    "Architecte Cloud",
-    "Passionné de Tech"
+    "Concepteur UI/UX",
+    "Intégrateur Web",
+    "Consultant IT"
   ];
 
-  // Effet de machine à écrire
   const typeWriter = () => {
     const currentRole = roles[currentRoleIndex];
-    
+
     if (!isDeleting) {
       typedText = currentRole.substring(0, typedText.length + 1);
-      
       if (typedText === currentRole) {
         setTimeout(() => isDeleting = true, 2000);
       }
     } else {
       typedText = currentRole.substring(0, typedText.length - 1);
-      
       if (typedText === "") {
         isDeleting = false;
         currentRoleIndex = (currentRoleIndex + 1) % roles.length;
       }
     }
-    
+
     setTimeout(typeWriter, isDeleting ? 50 : typeSpeed);
   };
 
@@ -42,309 +39,221 @@
     typeWriter();
   });
 
-  // Statistiques
-  const stats = [
-    { number: "5+", label: "Années d'expérience", icon: "📅" },
-    { number: "100+", label: "Projets réalisés", icon: "🚀" },
-    { number: "50+", label: "Clients satisfaits", icon: "😊" },
-    { number: "10+", label: "Technologies maîtrisées", icon: "💻" }
+  const highlights = [
+    { number: "3+", label: "Années d'expérience" },
+    { number: "20+", label: "Projets livrés" },
+    { number: "15+", label: "Clients accompagnés" },
+    { number: "8", label: "Technologies maîtrisées" }
   ];
 
-  // Technologies
   const technologies = [
-    { name: "React", icon: "⚛️", color: "from-cyan-400 to-blue-500" },
-    { name: "Svelte", icon: "🔥", color: "from-orange-400 to-red-500" },
-    { name: "Node.js", icon: "🟢", color: "from-green-400 to-emerald-500" },
-    { name: "TypeScript", icon: "📘", color: "from-blue-400 to-indigo-500" },
-    { name: "Python", icon: "🐍", color: "from-yellow-400 to-amber-500" },
-    { name: "Docker", icon: "🐳", color: "from-blue-500 to-cyan-500" }
+    { name: "React", color: "from-cyan-400 to-blue-500" },
+    { name: "Svelte", color: "from-orange-400 to-red-500" },
+    { name: "Node.js", color: "from-green-400 to-emerald-500" },
+    { name: "TypeScript", color: "from-blue-400 to-indigo-500" },
+    { name: "Laravel", color: "from-red-400 to-rose-500" },
+    { name: "Python", color: "from-yellow-400 to-amber-500" },
+    { name: "Angular", color: "from-red-500 to-pink-500" },
+    { name: "Docker", color: "from-blue-500 to-cyan-500" }
   ];
 
-  // Scroll vers les projets
-  const scrollToProjects = () => {
-    window.location.href = `${base}/projects`;
-  };
+  const testimonials = [
+    {
+      name: "Marie L.",
+      role: "Directrice, Agence Digitale",
+      text: "Gabriel a livré un travail de qualité dans les délais. Son professionnalisme et sa réactivité sont remarquables.",
+      rating: 5
+    },
+    {
+      name: "Jean-Pierre R.",
+      role: "Fondateur, StartUp Tech",
+      text: "Excellente collaboration. Il a su comprendre nos besoins et proposer des solutions adaptées. Je recommande vivement.",
+      rating: 5
+    },
+    {
+      name: "Sandra M.",
+      role: "Responsable Marketing",
+      text: "Un développeur fiable et créatif. Le résultat a dépassé nos attentes, aussi bien sur le design que sur les performances.",
+      rating: 5
+    }
+  ];
 </script>
 
-<main class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20 text-gray-900 dark:text-gray-100">
-  
-  <!-- Particules flottantes en arrière-plan -->
+<section class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-white via-gray-50 to-blue-50/40 dark:from-gray-950 dark:via-gray-900 dark:to-blue-950/20">
+
+  <!-- Fond subtil -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none">
-    {#each Array(20) as _, i}
-      <Motion
-        initial={{ opacity: 0, y: Math.random() * 1000 }}
-        animate={{ 
-          opacity: [0.1, 0.3, 0.1],
-          y: [Math.random() * 1000, -100],
-          x: [Math.random() * 100 - 50, Math.random() * 100 - 50]
-        }}
-        transition={{ 
-          duration: Math.random() * 10 + 10,
-          repeat: Infinity,
-          delay: Math.random() * 5
-        }}
-      >
-        <div 
-          class="absolute w-2 h-2 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full blur-sm"
-          style="left: {Math.random() * 100}%; top: {Math.random() * 100}%"
-        ></div>
-      </Motion>
-    {/each}
+    <div class="absolute top-1/4 -left-32 w-96 h-96 bg-blue-100/40 dark:bg-blue-900/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-1/4 -right-32 w-96 h-96 bg-indigo-100/40 dark:bg-indigo-900/10 rounded-full blur-3xl"></div>
   </div>
 
   <!-- Contenu principal -->
-  <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
-    
-    <!-- Badge de bienvenue -->
+  <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+
+    <!-- Badge -->
     <Motion
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg mb-8 border border-gray-200 dark:border-gray-700">
-        <span class="relative flex h-3 w-3">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+      <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-gray-800/60 backdrop-blur rounded-full mb-10 border border-gray-200/60 dark:border-gray-700/60 text-sm">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
         </span>
-        <span class="text-sm font-medium">Disponible pour de nouveaux projets</span>
+        <span class="text-gray-600 dark:text-gray-400 font-medium">Disponible pour de nouveaux projets</span>
       </div>
     </Motion>
 
-    <!-- Titre principal avec animation -->
+    <!-- Titre -->
     <Motion
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.2 }}
+      transition={{ duration: 0.7, delay: 0.15 }}
     >
-      <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-6 leading-tight">
-        <span class="block text-gray-900 dark:text-white mb-2">
-          Bonjour, je suis
-        </span>
-        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 animate-gradient">
-          {name}
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-5 leading-[1.1] tracking-tight">
+        <span class="text-gray-900 dark:text-white">Gabriel</span>
+        <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+          {typedText}<span class="inline-block w-[2px] h-[0.85em] bg-blue-600 dark:bg-blue-400 ml-0.5 align-middle animate-blink"></span>
         </span>
       </h1>
     </Motion>
 
-    <!-- Sous-titre avec effet de machine à écrire -->
-    <Motion
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8, delay: 0.4 }}
-    >
-      <div class="text-2xl md:text-3xl font-semibold mb-8 h-12 flex items-center justify-center">
-        <span class="text-gray-700 dark:text-gray-300">{typedText}</span>
-        <span class="inline-block w-0.5 h-8 bg-blue-600 dark:bg-blue-400 ml-1 animate-blink"></span>
-      </div>
-    </Motion>
-
     <!-- Description -->
     <Motion
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.6 }}
+      transition={{ duration: 0.7, delay: 0.35 }}
     >
-      <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed">
-        Je crée des <span class="font-semibold text-blue-600 dark:text-blue-400">expériences digitales exceptionnelles</span> 
-        en combinant design moderne, code performant et technologies de pointe. 
-        Transformons ensemble vos idées en <span class="font-semibold text-purple-600 dark:text-purple-400">réalité numérique</span>.
+      <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+        Je conçois et développe des applications web modernes,
+        en alliant <strong class="text-gray-800 dark:text-gray-200">performance technique</strong> et
+        <strong class="text-gray-800 dark:text-gray-200">expérience utilisateur soignée</strong>.
+        Basé à Fianarantsoa, Madagascar.
       </p>
     </Motion>
 
-    <!-- Boutons d'action -->
+    <!-- CTA -->
     <Motion
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.8 }}
+      transition={{ duration: 0.7, delay: 0.5 }}
     >
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-        <Motion
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.2 }}
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
+        <a
+          href="{base}/projects"
+          class="group px-7 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 font-semibold text-base flex items-center gap-2"
         >
-          <button 
-            on:click={scrollToProjects}
-            class="group px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 font-semibold text-lg flex items-center gap-2"
-          >
-            <span>Voir mes projets</span>
-            <span class="transform group-hover:translate-x-1 transition-transform">→</span>
-          </button>
-        </Motion>
-
-        <Motion
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.2 }}
+          <span>Voir mes réalisations</span>
+          <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+          </svg>
+        </a>
+        <a
+          href="{base}/contact"
+          class="px-7 py-3.5 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 font-semibold text-base border border-gray-200 dark:border-gray-700"
         >
-          <a 
-            href="{base}/contact"
-            class="px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-lg border-2 border-gray-200 dark:border-gray-700"
-          >
-            Me contacter
-          </a>
-        </Motion>
+          Me contacter
+        </a>
       </div>
     </Motion>
 
-    <!-- Statistiques -->
+    <!-- Chiffres clés -->
     <Motion
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 1 }}
+      transition={{ duration: 0.7, delay: 0.65 }}
     >
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-        {#each stats as stat, i}
-          <Motion
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 1.2 + (i * 0.1) }}
-            whileHover={{ scale: 1.05, y: -5 }}
-          >
-            <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-              <div class="text-3xl mb-2">{stat.icon}</div>
-              <div class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 mb-1">
-                {stat.number}
-              </div>
-              <div class="text-sm text-gray-600 dark:text-gray-400 font-medium">
-                {stat.label}
-              </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-16">
+        {#each highlights as stat}
+          <div class="bg-white/70 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 dark:border-gray-800">
+            <div class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-1">
+              {stat.number}
             </div>
-          </Motion>
+            <div class="text-sm text-gray-500 dark:text-gray-400">
+              {stat.label}
+            </div>
+          </div>
         {/each}
       </div>
     </Motion>
 
     <!-- Technologies -->
     <Motion
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 1.4 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.7, delay: 0.8 }}
     >
       <div class="mb-8">
-        <p class="text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400 font-semibold mb-6">
-          Technologies que je maîtrise
+        <p class="text-xs uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 font-semibold mb-5">
+          Stack technique
         </p>
-        <div class="flex flex-wrap justify-center gap-4">
-          {#each technologies as tech, i}
-            <Motion
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: 1.6 + (i * 0.1) }}
-              whileHover={{ scale: 1.1, rotate: 5 }}
-            >
-              <div class="group relative px-5 py-3 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700 cursor-pointer">
-                <div class="flex items-center gap-2">
-                  <span class="text-2xl">{tech.icon}</span>
-                  <span class="font-semibold text-gray-700 dark:text-gray-300">{tech.name}</span>
-                </div>
-                <!-- Effet de gradient au hover -->
-                <div class="absolute inset-0 rounded-xl bg-gradient-to-r {tech.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-              </div>
-            </Motion>
+        <div class="flex flex-wrap justify-center gap-3">
+          {#each technologies as tech}
+            <div class="px-4 py-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700/80 hover:border-gray-300 dark:hover:border-gray-600 transition-colors duration-200">
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{tech.name}</span>
+            </div>
           {/each}
         </div>
       </div>
     </Motion>
 
-    <!-- Scroll indicator -->
-    <Motion
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1, delay: 2 }}
-    >
-      <div class="mt-16">
-        <Motion
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <div class="inline-flex flex-col items-center gap-2 text-gray-400 dark:text-gray-500 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-            <span class="text-sm font-medium">Défiler vers le bas</span>
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-          </div>
-        </Motion>
-      </div>
-    </Motion>
-
   </div>
+</section>
 
-  <!-- Formes géométriques décoratives -->
-  <div class="absolute top-20 left-10 w-20 h-20 bg-blue-400/10 rounded-full blur-xl animate-float"></div>
-  <div class="absolute bottom-20 right-10 w-32 h-32 bg-purple-400/10 rounded-full blur-xl animate-float-delay"></div>
-  <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-pink-400/10 rounded-full blur-xl animate-float-slow"></div>
+<!-- Bannière publicitaire -->
+<div class="max-w-4xl mx-auto px-6">
+  <AdBanner format="horizontal" slot="1234567890" />
+</div>
 
-</main>
+<!-- Témoignages -->
+<section class="py-20 px-6 bg-gray-50 dark:bg-gray-900">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
+        Ce que disent mes clients
+      </h2>
+      <p class="text-gray-500 dark:text-gray-400">Retours d'expérience de collaborations récentes</p>
+    </div>
 
-<style lang="postcss">
-  main {
-    font-family: "Inter", sans-serif;
-  }
+    <div class="grid md:grid-cols-3 gap-6">
+      {#each testimonials as testimonial}
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/80 hover:shadow-md transition-shadow duration-200">
+          <!-- Étoiles -->
+          <div class="flex gap-0.5 mb-3">
+            {#each Array(testimonial.rating) as _}
+              <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
+            {/each}
+          </div>
 
-  @keyframes gradient {
-    0%, 100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
+          <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4 italic">
+            "{testimonial.text}"
+          </p>
 
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient 3s ease infinite;
-  }
+          <div class="border-t border-gray-100 dark:border-gray-700 pt-3">
+            <p class="text-sm font-semibold text-gray-800 dark:text-gray-200">{testimonial.name}</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">{testimonial.role}</p>
+          </div>
+        </div>
+      {/each}
+    </div>
+  </div>
+</section>
 
+<!-- Pub rectangle en bas de page -->
+<div class="max-w-4xl mx-auto px-6 py-4">
+  <AdBanner format="rectangle" slot="0987654321" />
+</div>
+
+<style>
   @keyframes blink {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
   }
 
   .animate-blink {
     animation: blink 1s step-end infinite;
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0) translateX(0);
-    }
-    50% {
-      transform: translateY(-20px) translateX(10px);
-    }
-  }
-
-  @keyframes float-delay {
-    0%, 100% {
-      transform: translateY(0) translateX(0);
-    }
-    50% {
-      transform: translateY(-30px) translateX(-15px);
-    }
-  }
-
-  @keyframes float-slow {
-    0%, 100% {
-      transform: translateY(0) translateX(0);
-    }
-    50% {
-      transform: translateY(-15px) translateX(20px);
-    }
-  }
-
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  .animate-float-delay {
-    animation: float-delay 8s ease-in-out infinite;
-  }
-
-  .animate-float-slow {
-    animation: float-slow 10s ease-in-out infinite;
   }
 </style>
