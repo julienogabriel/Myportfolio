@@ -4,10 +4,10 @@
    *
    * Pour activer les vraies pubs :
    * 1. Créer un compte Google AdSense (https://adsense.google.com)
-   * 2. Remplacer "ca-pub-XXXXXXXXXXXXXXXX" par votre ID éditeur
+   * 2. Remplacer "ca-pub-5820283522446403" par votre ID éditeur
    * 3. Remplacer les data-ad-slot par vos vrais slots
    * 4. Ajouter le script AdSense dans +layout.svelte <svelte:head>
-   *    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"><\/script>
+   *    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5820283522446403" crossorigin="anonymous"><\/script>
    */
 
   let { format = 'horizontal', slot = '1234567890' } = $props();
@@ -29,7 +29,7 @@
       <!-- Zone AdSense — remplacer par le vrai code une fois approuvé -->
       <ins class="adsbygoogle"
         style="display:block"
-        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+        data-ad-client="ca-pub-5820283522446403"
         data-ad-slot={slot}
         data-ad-format={format === 'responsive' ? 'auto' : ''}
         data-full-width-responsive={format === 'responsive' ? 'true' : 'false'}
