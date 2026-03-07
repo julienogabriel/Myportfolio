@@ -4,6 +4,8 @@
   import { quintOut } from 'svelte/easing';
   import Navbar from '$lib/Navbar.svelte';
   import Footer from '$lib/Footer.svelte';
+  import CookieConsent from '$lib/CookieConsent.svelte';
+  import WhatsAppButton from '$lib/WhatsAppButton.svelte';
   
   let isOpen = false;
   let darkMode = $state(false);
@@ -108,11 +110,10 @@
   <meta name="twitter:image" content="/images/twitter-card.jpg">
   <meta name="twitter:creator" content="@gabriel_dev">
   
-  <!-- Connexions externes (commenté si non utilisé) -->
-  <!-- 
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-  -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- Favicon moderne (commenté si les fichiers n'existent pas) -->
   <!--
@@ -133,10 +134,13 @@
 
 <!-- Loading state -->
 {#if isLoading}
-  <div class="fixed inset-0 bg-white dark:bg-darkBackground flex items-center justify-center z-50 transition-opacity duration-500">
+  <div class="fixed inset-0 bg-white dark:bg-gray-950 flex items-center justify-center z-[60] transition-opacity duration-500">
     <div class="text-center">
-      <div class="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-      <p class="text-gray-600 dark:text-gray-400 font-medium">Chargement du portfolio...</p>
+      <div class="relative w-10 h-10 mx-auto mb-3">
+        <div class="absolute inset-0 rounded-full border-2 border-gray-200 dark:border-gray-800"></div>
+        <div class="absolute inset-0 rounded-full border-2 border-t-blue-600 border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
+      </div>
+      <p class="text-gray-400 dark:text-gray-500 text-xs tracking-wide">Chargement</p>
     </div>
   </div>
 {/if}
@@ -144,10 +148,10 @@
 <Navbar {isOpen} {menuSpring} />
 
 <!-- Bouton thème amélioré -->
-<div class="fixed bottom-6 right-6 z-40">
+<div class="fixed bottom-6 left-6 z-40">
   <button
     onclick={toggleDarkMode}
-    class="group relative p-3 bg-white dark:bg-gray-800 shadow-xl rounded-full hover:shadow-2xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
+    class="group relative p-3 bg-white dark:bg-gray-800 backdrop-blur-sm rounded-xl transition-all duration-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 border border-gray-200 dark:border-gray-700"
     aria-label={darkMode ? 'Activer le mode clair' : 'Activer le mode sombre'}
     title={darkMode ? 'Mode clair' : 'Mode sombre'}
   >
@@ -169,28 +173,20 @@
   </button>
 </div>
 
-<main 
-  class="min-h-screen bg-white dark:bg-darkBackground text-gray-900 dark:text-darkText transition-colors duration-300"
+<div
+  class="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300"
   id="main-content"
+  role="main"
   aria-label="Contenu principal"
 >
   {@render children()}
-</main>
+</div>
 
 <Footer />
+<WhatsAppButton />
+<CookieConsent />
 
 <style>
-  :global(html) {
-    scroll-behavior: smooth;
-  }
-  
-  :global(body) {
-    font-feature-settings: "kern", "liga", "clig", "calt";
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-  
   .theme-transition-overlay {
     position: fixed;
     inset: 0;
@@ -198,28 +194,31 @@
     z-index: 9999;
     transition: opacity 0.3s ease;
   }
-  
+
   :global(.dark) .theme-transition-overlay {
-    background: #1a1a1a;
+    background: #0f172a;
   }
-  
-  /* Améliorations responsive */
+
+  /* Theme toggle button glow */
+  :global(.fixed.bottom-6 button) {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.03);
+  }
+
+  :global(.dark .fixed.bottom-6 button) {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 130, 246, 0.1);
+  }
+
   @media (max-width: 768px) {
     :global(.fixed.bottom-6) {
       bottom: 1rem;
-      right: 1rem;
-    }
-    
-    :global(.fixed.bottom-6 button) {
-      padding: 0.75rem;
+      left: 1rem;
     }
   }
-  
-  /* Prévention de flash avec thème sombre */
+
   :global(html.dark) {
     color-scheme: dark;
   }
-  
+
   :global(html:not(.dark)) {
     color-scheme: light;
   }
