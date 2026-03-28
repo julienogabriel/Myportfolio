@@ -110,6 +110,42 @@
   <meta name="twitter:image" content="/images/twitter-card.jpg">
   <meta name="twitter:creator" content="@gabriel_dev">
   
+  <!-- JSON-LD Structured Data - Person -->
+  {@html `<script type="application/ld+json">${JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Gabriel",
+    "jobTitle": "Développeur Full-Stack & UI/UX Designer",
+    "url": "https://www.gabriel-dev.com",
+    "email": "julienogabriel@gmail.com",
+    "telephone": "+261 34 01 772 60",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Fianarantsoa",
+      "addressCountry": "MG"
+    },
+    "sameAs": [
+      "https://github.com/gabriel",
+      "https://linkedin.com/in/gabriel",
+      "https://twitter.com/gabriel_dev"
+    ],
+    "knowsAbout": ["Svelte", "React", "Node.js", "TypeScript", "Laravel", "Python", "Docker", "UI/UX Design"]
+  })}</script>`}
+
+  <!-- JSON-LD Structured Data - WebSite -->
+  {@html `<script type="application/ld+json">${JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Gabriel - Développeur Full-Stack",
+    "url": "https://www.gabriel-dev.com",
+    "description": "Portfolio de Gabriel, développeur full-stack spécialisé en applications modernes, UI/UX et architecture scalable.",
+    "inLanguage": "fr-FR",
+    "publisher": {
+      "@type": "Person",
+      "name": "Gabriel"
+    }
+  })}</script>`}
+
   <!-- Google AdSense verification -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5820283522446403" crossorigin="anonymous"></script>
 
