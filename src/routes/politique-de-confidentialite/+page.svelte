@@ -46,7 +46,6 @@
         <li><strong>Formulaire de contact :</strong> nom, adresse email, message</li>
         <li><strong>Formulaire de traduction :</strong> nom, email, documents soumis, langues source et cible</li>
         <li><strong>Formulaire de feedback :</strong> nom, email, commentaires</li>
-        <li><strong>Newsletter :</strong> adresse email</li>
       </ul>
 
       <h3>2.2 Données collectées automatiquement</h3>
@@ -62,15 +61,13 @@
         <li>Répondre à vos demandes de contact et de devis</li>
         <li>Traiter vos demandes de traduction</li>
         <li>Améliorer l'expérience utilisateur du site</li>
-        <li>Envoyer des newsletters (uniquement si vous y avez consenti)</li>
         <li>Analyser le trafic et les performances du site</li>
-        <li>Afficher des publicités pertinentes via Google AdSense</li>
       </ul>
 
       <h2>4. Base légale du traitement</h2>
       <p>Le traitement de vos données repose sur :</p>
       <ul>
-        <li><strong>Votre consentement :</strong> pour les cookies non essentiels, la newsletter et les publicités personnalisées</li>
+        <li><strong>Votre consentement :</strong> pour les cookies non essentiels</li>
         <li><strong>L'exécution d'un contrat :</strong> pour le traitement des demandes de services (développement, traduction)</li>
         <li><strong>L'intérêt légitime :</strong> pour l'amélioration du site et l'analyse du trafic</li>
       </ul>
@@ -90,26 +87,16 @@
         pour améliorer le site. Ces données sont anonymisées.
       </p>
 
-      <h3>5.3 Cookies publicitaires</h3>
-      <p>
-        Utilisés par Google AdSense pour afficher des publicités pertinentes.
-        Ces cookies peuvent suivre votre navigation sur différents sites.
-        Vous pouvez gérer vos préférences publicitaires sur
-        <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">les paramètres de publicité Google</a>.
-      </p>
-
       <h2>6. Partage des données</h2>
       <p>Vos données personnelles ne sont jamais vendues. Elles peuvent être partagées avec :</p>
       <ul>
-        <li><strong>Google AdSense :</strong> pour l'affichage de publicités (données anonymisées)</li>
         <li><strong>Services d'hébergement :</strong> pour le stockage sécurisé des données</li>
-        <li><strong>Services d'email :</strong> pour l'envoi de réponses et de newsletters</li>
+        <li><strong>Services d'email :</strong> pour l'envoi de réponses à vos demandes</li>
       </ul>
 
       <h2>7. Durée de conservation</h2>
       <ul>
         <li><strong>Données de contact :</strong> conservées pendant 3 ans après le dernier échange</li>
-        <li><strong>Données de newsletter :</strong> conservées jusqu'à votre désinscription</li>
         <li><strong>Cookies :</strong> durée maximale de 13 mois</li>
         <li><strong>Données analytiques :</strong> conservées pendant 26 mois</li>
       </ul>
