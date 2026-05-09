@@ -2,8 +2,6 @@
   import { base } from '$app/paths';
   import { page } from '$app/state';
   import { articles } from '$lib/blogData.js';
-  import AdBanner from '$lib/AdBanner.svelte';
-
   const article = $derived(articles.find(a => a.slug === page.params.slug));
   const currentIndex = $derived(articles.findIndex(a => a.slug === page.params.slug));
 
@@ -54,9 +52,6 @@
         </div>
       </header>
 
-      <!-- Pub avant contenu -->
-      <AdBanner format="horizontal" slot="3456789012" />
-
       <!-- Contenu -->
       <div class="prose prose-lg dark:prose-invert max-w-none
         prose-headings:text-gray-900 dark:prose-headings:text-white prose-headings:font-bold prose-headings:mt-10 prose-headings:mb-4
@@ -67,9 +62,6 @@
       ">
         {@html article.content}
       </div>
-
-      <!-- Pub après contenu -->
-      <AdBanner format="rectangle" slot="4567890123" />
 
       <!-- Navigation articles -->
       <div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">

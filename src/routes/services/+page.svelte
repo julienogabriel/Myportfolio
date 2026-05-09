@@ -1,7 +1,7 @@
 <script>
   import { Motion } from "svelte-motion";
   import { base } from '$app/paths';
-  import AdBanner from '$lib/AdBanner.svelte';
+
 
   const services = [
     {
@@ -109,11 +109,6 @@
           </div>
         </Motion>
       {/each}
-    </div>
-
-    <!-- Publicité -->
-    <div class="mb-12">
-      <AdBanner format="horizontal" slot="3456789012" />
     </div>
 
     <!-- Processus -->

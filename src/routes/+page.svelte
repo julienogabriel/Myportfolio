@@ -2,7 +2,6 @@
   import { Motion } from "svelte-motion";
   import { onMount } from "svelte";
   import { base } from '$app/paths';
-  import AdBanner from '$lib/AdBanner.svelte';
 
   let typedText = "";
   let currentRoleIndex = 0;
@@ -57,24 +56,21 @@
     { name: "Docker", color: "from-blue-500 to-cyan-500" }
   ];
 
-  const testimonials = [
+  const approche = [
     {
-      name: "Marie L.",
-      role: "Directrice, Agence Digitale",
-      text: "Gabriel a livré un travail de qualité dans les délais. Son professionnalisme et sa réactivité sont remarquables.",
-      rating: 5
+      title: "Analyse des besoins",
+      description: "Je commence chaque projet par une compréhension approfondie de vos objectifs business et techniques pour proposer la solution la plus adaptée.",
+      icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
     },
     {
-      name: "Jean-Pierre R.",
-      role: "Fondateur, StartUp Tech",
-      text: "Excellente collaboration. Il a su comprendre nos besoins et proposer des solutions adaptées. Je recommande vivement.",
-      rating: 5
+      title: "Développement itératif",
+      description: "Des livraisons régulières avec des points d'avancement pour vous permettre de suivre et valider chaque étape du projet.",
+      icon: "M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
     },
     {
-      name: "Sandra M.",
-      role: "Responsable Marketing",
-      text: "Un développeur fiable et créatif. Le résultat a dépassé nos attentes, aussi bien sur le design que sur les performances.",
-      rating: 5
+      title: "Qualité & performance",
+      description: "Code propre, tests rigoureux et optimisation des performances pour des applications fiables et rapides en production.",
+      icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
     }
   ];
 </script>
@@ -201,51 +197,52 @@
   </div>
 </section>
 
-<!-- Bannière publicitaire -->
-<div class="max-w-4xl mx-auto px-6">
-  <AdBanner format="horizontal" slot="1234567890" />
-</div>
-
-<!-- Témoignages -->
+<!-- Mon approche -->
 <section class="py-20 px-6 bg-gray-50 dark:bg-gray-900">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-12">
       <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
-        Ce que disent mes clients
+        Mon approche
       </h2>
-      <p class="text-gray-500 dark:text-gray-400">Retours d'expérience de collaborations récentes</p>
+      <p class="text-gray-500 dark:text-gray-400">Une méthodologie éprouvée pour des résultats concrets</p>
     </div>
 
     <div class="grid md:grid-cols-3 gap-6">
-      {#each testimonials as testimonial}
+      {#each approche as item}
         <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/80 hover:shadow-md transition-shadow duration-200">
-          <!-- Étoiles -->
-          <div class="flex gap-0.5 mb-3">
-            {#each Array(testimonial.rating) as _}
-              <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-              </svg>
-            {/each}
+          <div class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-950/50 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={item.icon}/>
+            </svg>
           </div>
-
-          <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4 italic">
-            "{testimonial.text}"
-          </p>
-
-          <div class="border-t border-gray-100 dark:border-gray-700 pt-3">
-            <p class="text-sm font-semibold text-gray-800 dark:text-gray-200">{testimonial.name}</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">{testimonial.role}</p>
-          </div>
+          <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-2">{item.title}</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{item.description}</p>
         </div>
       {/each}
     </div>
   </div>
 </section>
 
-<!-- Pub rectangle en bas de page -->
-<div class="max-w-4xl mx-auto px-6 py-4">
-  <AdBanner format="rectangle" slot="0987654321" />
-</div>
+<!-- CTA final -->
+<section class="py-16 px-6 bg-white dark:bg-gray-950">
+  <div class="max-w-3xl mx-auto text-center">
+    <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
+      Un projet en tête ?
+    </h2>
+    <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-lg mx-auto">
+      Discutons de vos besoins. Première consultation gratuite, réponse sous 24h.
+    </p>
+    <a
+      href="{base}/contact"
+      class="inline-flex items-center gap-2 px-7 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 font-semibold"
+    >
+      Me contacter
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+      </svg>
+    </a>
+  </div>
+</section>
 
 <style>
   @keyframes blink {

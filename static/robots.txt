@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://www.gabriel-dev.com/sitemap.xml
+Sitemap: https://myportfolio-pearl-eight-24.vercel.app/sitemap.xml

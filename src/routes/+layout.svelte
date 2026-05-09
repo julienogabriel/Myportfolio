@@ -98,7 +98,7 @@
   <meta property="og:title" content="Gabriel | Développeur Full-Stack">
   <meta property="og:description" content="Transformez vos idées en solutions digitales performantes. Expertise en développement full-stack et expérience utilisateur.">
   <meta property="og:image" content="/images/og-image-optimized.jpg">
-  <meta property="og:url" content="https://www.gabriel-dev.com">
+  <meta property="og:url" content="https://myportfolio-pearl-eight-24.vercel.app">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="Portfolio Gabriel">
@@ -116,7 +116,7 @@
     "@type": "Person",
     "name": "Gabriel",
     "jobTitle": "Développeur Full-Stack & UI/UX Designer",
-    "url": "https://www.gabriel-dev.com",
+    "url": "https://myportfolio-pearl-eight-24.vercel.app",
     "email": "julienogabriel@gmail.com",
     "telephone": "+261 34 01 772 60",
     "address": {
@@ -137,7 +137,7 @@
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Gabriel - Développeur Full-Stack",
-    "url": "https://www.gabriel-dev.com",
+    "url": "https://myportfolio-pearl-eight-24.vercel.app",
     "description": "Portfolio de Gabriel, développeur full-stack spécialisé en applications modernes, UI/UX et architecture scalable.",
     "inLanguage": "fr-FR",
     "publisher": {
@@ -145,9 +145,6 @@
       "name": "Gabriel"
     }
   })}</script>`}
-
-  <!-- Google AdSense verification -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5820283522446403" crossorigin="anonymous"></script>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">

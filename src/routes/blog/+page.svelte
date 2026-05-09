@@ -1,7 +1,6 @@
 <script>
   import { base } from '$app/paths';
   import { articles } from '$lib/blogData.js';
-  import AdBanner from '$lib/AdBanner.svelte';
 
   let searchQuery = $state('');
   let activeCategory = $state('Tous');
@@ -66,13 +65,10 @@
       {/each}
     </div>
 
-    <!-- Pub en haut -->
-    <AdBanner format="horizontal" slot="8901234567" />
-
     <!-- Articles -->
     {#if filteredArticles.length > 0}
       <div class="space-y-6">
-        {#each filteredArticles as article, i}
+        {#each filteredArticles as article}
           <a
             href="{base}/blog/{article.slug}"
             class="block group bg-white dark:bg-gray-900 rounded-2xl p-6 border border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700 hover:shadow-md transition-all duration-200"
@@ -113,11 +109,6 @@
               </div>
             </div>
           </a>
-
-          <!-- Pub après le 2e article -->
-          {#if i === 1}
-            <AdBanner format="horizontal" slot="9012345678" />
-          {/if}
         {/each}
       </div>
     {:else}
@@ -128,22 +119,6 @@
         <p class="text-gray-500 dark:text-gray-400">Aucun article trouvé.</p>
       </div>
     {/if}
-
-    <!-- Newsletter CTA -->
-    <div class="mt-16 bg-gray-50 dark:bg-gray-900 rounded-2xl p-8 border border-gray-100 dark:border-gray-800 text-center">
-      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Restez informé</h3>
-      <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">Recevez mes nouveaux articles directement dans votre boîte mail.</p>
-      <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-        <input
-          type="email"
-          placeholder="votre@email.com"
-          class="flex-1 px-4 py-2.5 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-xl text-sm text-gray-800 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
-        />
-        <button type="submit" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold transition-colors">
-          S'abonner
-        </button>
-      </form>
-    </div>
 
   </div>
 </section>

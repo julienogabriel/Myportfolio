@@ -1,7 +1,7 @@
 <script>
   import { Motion } from 'svelte-motion';
   import { base } from '$app/paths';
-  import AdBanner from '$lib/AdBanner.svelte';
+
 
   let name = $state('');
   let email = $state('');
@@ -278,9 +278,6 @@
               </a>
             </div>
           </div>
-
-          <!-- Publicité -->
-          <AdBanner format="rectangle" slot="5678901234" />
 
           <!-- FAQ -->
           <div class="rounded-2xl border border-gray-100 dark:border-gray-800 p-6">

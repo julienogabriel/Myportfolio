@@ -1,7 +1,7 @@
 <script>
   import { Motion } from "svelte-motion";
   import { base } from '$app/paths';
-  import AdBanner from '$lib/AdBanner.svelte';
+
 
   const skills = [
     { name: 'Svelte / SvelteKit', level: 95, color: 'from-orange-500 to-red-500' },
@@ -165,7 +165,7 @@
               <p class="text-sm text-gray-600 dark:text-gray-400">Consultez mon parcours complet au format PDF</p>
             </div>
             <a
-              href="{base}/CV_Gabriel.pdf"
+              href="{base}/CV GABRIEL.pdf"
               download
               class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold text-sm transition-all duration-200 hover:shadow-md flex items-center gap-2 flex-shrink-0"
             >
@@ -177,9 +177,6 @@
           </div>
         </div>
       </Motion>
-
-      <!-- Publicité -->
-      <AdBanner format="horizontal" slot="4567890123" />
 
       <!-- CTA -->
       <Motion
