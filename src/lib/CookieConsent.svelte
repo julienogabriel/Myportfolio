@@ -8,8 +8,6 @@
       const consent = localStorage.getItem('cookie-consent');
       if (!consent) {
         setTimeout(() => visible = true, 1500);
-      } else if (consent === 'accepted') {
-        loadAds();
       }
     }
   });
@@ -17,34 +15,11 @@
   function accept() {
     localStorage.setItem('cookie-consent', 'accepted');
     visible = false;
-    // Activer Google Analytics / AdSense ici si besoin
-    loadAds();
   }
 
   function decline() {
     localStorage.setItem('cookie-consent', 'declined');
     visible = false;
-  }
-
-  function loadAds() {
-    if (typeof window !== 'undefined' && !document.querySelector('script[src*="adsbygoogle"]')) {
-      const script = document.createElement('script');
-      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5820283522446403';
-      script.async = true;
-      script.crossOrigin = 'anonymous';
-      document.head.appendChild(script);
-
-      script.onload = () => {
-        // Initialiser toutes les unités publicitaires présentes sur la page
-        document.querySelectorAll('.adsbygoogle').forEach(() => {
-          try {
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
-          } catch (e) {
-            // Ad already initialized
-          }
-        });
-      };
-    }
   }
 </script>
 
@@ -53,7 +28,7 @@
     <div class="max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
       <div class="flex-1">
         <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-          Ce site utilise des cookies pour améliorer votre expérience et afficher des publicités pertinentes.
+          Ce site utilise des cookies pour améliorer votre expérience.
           En continuant, vous acceptez notre utilisation des cookies.
         </p>
       </div>
