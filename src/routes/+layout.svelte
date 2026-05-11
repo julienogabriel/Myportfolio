@@ -87,6 +87,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content={darkMode ? '#1a1a1a' : '#ffffff'}>
   
+  <!-- Google AdSense verification -->
+  <meta name="google-adsense-account" content="ca-pub-5820283522446403">
+
   <!-- Meta améliorées pour SEO -->
   <title>Gabriel | Développeur Full-Stack & UI/UX Designer</title>
   <meta name="description" content="Portfolio de Gabriel, développeur full-stack spécialisé en applications modernes, UI/UX et architecture scalable. Découvrez mes projets et solutions innovantes.">
