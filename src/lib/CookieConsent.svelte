@@ -8,6 +8,8 @@
       const consent = localStorage.getItem('cookie-consent');
       if (!consent) {
         setTimeout(() => visible = true, 1500);
+      } else if (consent === 'accepted') {
+        loadAds();
       }
     }
   });
@@ -25,13 +27,23 @@
   }
 
   function loadAds() {
-    // Charger le script AdSense après consentement
     if (typeof window !== 'undefined' && !document.querySelector('script[src*="adsbygoogle"]')) {
       const script = document.createElement('script');
-      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX';
+      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5820283522446403';
       script.async = true;
       script.crossOrigin = 'anonymous';
       document.head.appendChild(script);
+
+      script.onload = () => {
+        // Initialiser toutes les unités publicitaires présentes sur la page
+        document.querySelectorAll('.adsbygoogle').forEach(() => {
+          try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          } catch (e) {
+            // Ad already initialized
+          }
+        });
+      };
     }
   }
 </script>

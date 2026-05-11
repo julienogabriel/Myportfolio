@@ -2,6 +2,7 @@
   import { base } from '$app/paths';
   import { page } from '$app/state';
   import { articles } from '$lib/blogData.js';
+  import AdBanner from '$lib/AdBanner.svelte';
   const article = $derived(articles.find(a => a.slug === page.params.slug));
   const currentIndex = $derived(articles.findIndex(a => a.slug === page.params.slug));
 
@@ -62,6 +63,9 @@
       ">
         {@html article.content}
       </div>
+
+      <!-- Publicite -->
+      <AdBanner format="responsive" />
 
       <!-- Navigation articles -->
       <div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">

@@ -4,7 +4,7 @@
 
 <svelte:head>
   <title>Mentions légales | Gabriel - Développeur Full-Stack</title>
-  <meta name="description" content="Mentions légales du site gabriel-dev.com. Informations sur l'éditeur, l'hébergeur et les conditions d'utilisation du site.">
+  <meta name="description" content="Mentions légales du site myportfolio-pearl-eight-24.vercel.app. Informations sur l'éditeur, l'hébergeur et les conditions d'utilisation du site.">
   <meta name="robots" content="noindex, follow">
 </svelte:head>
 
@@ -27,7 +27,7 @@
 
       <h2>1. Éditeur du site</h2>
       <p>
-        Le site <strong>gabriel-dev.com</strong> est édité par Gabriel, développeur full-stack et consultant IT,
+        Le site <strong>myportfolio-pearl-eight-24.vercel.app</strong> est édité par Gabriel, développeur full-stack et consultant IT,
         exerçant en tant qu'auto-entrepreneur.
       </p>
       <ul>
@@ -40,8 +40,8 @@
 
       <h2>2. Hébergement</h2>
       <p>
-        Le site est hébergé par des services d'hébergement web modernes assurant
-        une disponibilité optimale et une sécurité renforcée des données.
+        Le site est hébergé par <strong>Vercel Inc.</strong>, 340 S Lemon Ave #4133, Walnut, CA 91789, USA.
+        Site web : <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">vercel.com</a>.
       </p>
 
       <h2>3. Propriété intellectuelle</h2>

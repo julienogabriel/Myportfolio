@@ -125,9 +125,9 @@
       "addressCountry": "MG"
     },
     "sameAs": [
-      "https://github.com/gabriel",
-      "https://linkedin.com/in/gabriel",
-      "https://twitter.com/gabriel_dev"
+      "https://github.com/julienogabriel",
+      "https://www.linkedin.com/in/julieno-gabriel-rafanomezantsoa-a17603282",
+      "https://wa.me/261340177260"
     ],
     "knowsAbout": ["Svelte", "React", "Node.js", "TypeScript", "Laravel", "Python", "Docker", "UI/UX Design"]
   })}</script>`}
@@ -145,6 +145,9 @@
       "name": "Gabriel"
     }
   })}</script>`}
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5820283522446403" crossorigin="anonymous"></script>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">

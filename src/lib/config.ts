@@ -6,25 +6,25 @@
 export const siteConfig = {
   name: 'Gabriel Portfolio',
   description: 'Développeur Full-Stack - UI/UX Designer - Consultant IT',
-  url: 'https://gabriel-portfolio.dev',
+  url: 'https://myportfolio-pearl-eight-24.vercel.app',
   email: 'julienogabriel@gmail.com',
   phone: '+261 34 01 772 60',
   location: 'FIANARANTSOA, Madagascar',
   
   // Réseaux sociaux
   social: {
-    github: 'https://github.com/gabriel',
-    linkedin: 'https://linkedin.com/in/gabriel',
-    twitter: 'https://twitter.com/gabriel',
-    whatsapp: 'https://wa.me/261xxxxxxxxx'
+    github: 'https://github.com/julienogabriel',
+    linkedin: 'https://www.linkedin.com/in/julieno-gabriel-rafanomezantsoa-a17603282',
+    twitter: 'https://twitter.com/gabriel_dev',
+    whatsapp: 'https://wa.me/261340177260'
   },
 
   // Informations principales
   stats: {
-    experience: '5+',
-    projects: '100+',
-    clients: '50+',
-    technologies: '10+'
+    experience: '3+',
+    projects: '20+',
+    clients: '15+',
+    technologies: '8'
   },
 
   // Services offerts

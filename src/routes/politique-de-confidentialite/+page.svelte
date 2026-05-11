@@ -4,7 +4,7 @@
 
 <svelte:head>
   <title>Politique de confidentialité | Gabriel - Développeur Full-Stack</title>
-  <meta name="description" content="Politique de confidentialité du site gabriel-dev.com. Découvrez comment vos données personnelles sont collectées, utilisées et protégées.">
+  <meta name="description" content="Politique de confidentialité du site myportfolio-pearl-eight-24.vercel.app. Découvrez comment vos données personnelles sont collectées, utilisées et protégées.">
   <meta name="robots" content="noindex, follow">
 </svelte:head>
 
@@ -28,7 +28,7 @@
       <p>
         La protection de vos données personnelles est une priorité pour Gabriel.
         Cette politique de confidentialité explique quelles informations sont collectées
-        lorsque vous visitez le site <strong>gabriel-dev.com</strong>, comment elles sont utilisées
+        lorsque vous visitez le site <strong>myportfolio-pearl-eight-24.vercel.app</strong>, comment elles sont utilisées
         et quels sont vos droits.
       </p>
 
