@@ -1,6 +1,7 @@
-import { json } from '@sveltejs/kit';
+import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from '@sveltejs/kit';
-import crypto from 'crypto';
+import { timingSafeEqual, createHmac } from 'node:crypto';
+import { env } from '$env/dynamic/private';
 
 /**
  * Endpoint Webhook - Reçoit les notifications de Gabriel Chat
@@ -24,17 +25,12 @@ const webhookLogs: {
 	verified: boolean;
 }[] = [];
 
-// Secret partagé avec Gabriel Chat (à remplacer par le vrai secret)
-const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || '';
-
-/**
- * Vérifie la signature HMAC-SHA256 du webhook
- * Cela garantit que le message vient bien de Gabriel Chat
- */
 function verifySignature(payload: string, signature: string, secret: string): boolean {
-	if (!secret) return false;
-	const expected = crypto.createHmac('sha256', secret).update(payload).digest('hex');
-	return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+	const expected = createHmac('sha256', secret).update(payload).digest('hex');
+	const sigBuf = Buffer.from(signature);
+	const expectedBuf = Buffer.from(expected);
+	if (sigBuf.length !== expectedBuf.length) return false;
+	return timingSafeEqual(sigBuf, expectedBuf);
 }
 
 /**
@@ -42,45 +38,37 @@ function verifySignature(payload: string, signature: string, secret: string): bo
  * Reçoit les notifications webhook de Gabriel Chat
  */
 export const POST: RequestHandler = async ({ request }) => {
+	const secret = env.WEBHOOK_SECRET?.trim();
+	if (!secret) {
+		console.error('[WEBHOOK] WEBHOOK_SECRET non configuré');
+		return json({ error: 'Webhook non configuré' }, { status: 500 });
+	}
+
+	const event = request.headers.get('X-Webhook-Event') || 'unknown';
+	const signature = request.headers.get('X-Webhook-Signature') || '';
+	const body = await request.text();
+
+	if (!signature || !verifySignature(body, signature, secret)) {
+		console.warn(`[WEBHOOK] Signature invalide pour event=${event}`);
+		return json({ error: 'Signature invalide' }, { status: 401 });
+	}
+
 	try {
-		const event = request.headers.get('X-Webhook-Event') || 'unknown';
-		const signature = request.headers.get('X-Webhook-Signature') || '';
-		const body = await request.text();
-
-		// Vérifier la signature si un secret est configuré
-		let verified = false;
-		if (WEBHOOK_SECRET && signature) {
-			verified = verifySignature(body, signature, WEBHOOK_SECRET);
-			if (!verified) {
-				console.warn(`[WEBHOOK] Signature invalide pour event=${event}`);
-				return json({ error: 'Signature invalide' }, { status: 401 });
-			}
-		}
-
 		const payload = JSON.parse(body);
 
-		// Logger la notification
 		const log = {
 			event,
 			data: payload.data || payload,
 			timestamp: new Date().toISOString(),
-			verified
+			verified: true
 		};
-		webhookLogs.unshift(log); // Ajouter au début
+		webhookLogs.unshift(log);
 
-		// Garder les 100 dernières notifications max
 		if (webhookLogs.length > 100) {
 			webhookLogs.length = 100;
 		}
 
 		console.log(`[WEBHOOK] Reçu: event=${event}`, JSON.stringify(payload.data || {}).slice(0, 200));
-
-		// --- Ici tu peux ajouter des actions personnalisées ---
-		// Exemples :
-		// - Envoyer un email quand limit_reached
-		// - Logger dans une base de données
-		// - Envoyer une notification Telegram/Discord
-		// - Mettre à jour un dashboard
 
 		return json({
 			success: true,
@@ -95,10 +83,15 @@ export const POST: RequestHandler = async ({ request }) => {
 /**
  * GET /api/webhook
  * Voir les dernières notifications reçues (pour debug/dashboard)
+ * Réservé à l'admin authentifié.
  */
-export const GET: RequestHandler = async () => {
+export const GET: RequestHandler = async ({ locals }) => {
+	if (!locals.isAdmin) {
+		throw error(401, 'Non autorisé');
+	}
+
 	return json({
 		total: webhookLogs.length,
-		logs: webhookLogs.slice(0, 20) // Les 20 dernières
+		logs: webhookLogs.slice(0, 20)
 	});
 };
