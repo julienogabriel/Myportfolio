@@ -17,7 +17,9 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 export const actions: Actions = {
   login: async ({ request, cookies, getClientAddress }) => {
-    if (!env.ADMIN_PASSWORD_HASH || !env.SESSION_SECRET) {
+    const passwordHash = env.ADMIN_PASSWORD_HASH?.trim();
+    const sessionSecret = env.SESSION_SECRET?.trim();
+    if (!passwordHash || !sessionSecret) {
       return fail(500, { error: "Authentification non configurée sur le serveur." });
     }
 
@@ -29,13 +31,13 @@ export const actions: Actions = {
     const data = await request.formData();
     const password = String(data.get('password') ?? '');
 
-    if (!password || !verifyPassword(password, env.ADMIN_PASSWORD_HASH)) {
+    if (!password || !verifyPassword(password, passwordHash)) {
       recordFailedAttempt(ip);
       return fail(401, { error: 'Mot de passe incorrect' });
     }
 
     clearAttempts(ip);
-    cookies.set(COOKIE_NAME, createSessionToken(env.SESSION_SECRET), {
+    cookies.set(COOKIE_NAME, createSessionToken(sessionSecret), {
       path: '/',
       httpOnly: true,
       secure: true,
