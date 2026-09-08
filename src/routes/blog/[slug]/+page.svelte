@@ -31,7 +31,7 @@
       <!-- Header -->
       <header class="mb-10">
         <div class="flex items-center gap-3 mb-4">
-          <span class="px-3 py-1 bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">
+          <span class="px-2 py-0.5 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs font-medium rounded">
             {article.category}
           </span>
           <span class="text-sm text-gray-400 dark:text-gray-500">{article.readTime} de lecture</span>
