@@ -1,13 +1,12 @@
 <script>
-  import { onMount } from 'svelte';
+  import { enhance } from '$app/forms';
   import { base } from '$app/paths';
   import { projectStore, settingsStore } from '$lib/stores/dataStore';
 
-  const ADMIN_PASSWORD = '***REMOVED***';
+  let { data, form } = $props();
 
-  let isAuthenticated = $state(false);
-  let passwordInput = $state('');
-  let authError = $state('');
+  let isAuthenticated = $derived(data.isAdmin);
+  let loggingIn = $state(false);
 
   // Tabs
   let activeTab = $state('projects');
@@ -27,27 +26,6 @@
   // Settings state
   let settings = $state({ available: true, heroTitle: '', heroSubtitle: '' });
   let settingsSaved = $state(false);
-
-  onMount(() => {
-    const auth = sessionStorage.getItem('admin_auth');
-    if (auth === 'true') isAuthenticated = true;
-  });
-
-  function login() {
-    if (passwordInput === ADMIN_PASSWORD) {
-      isAuthenticated = true;
-      sessionStorage.setItem('admin_auth', 'true');
-      authError = '';
-      loadData();
-    } else {
-      authError = 'Mot de passe incorrect';
-    }
-  }
-
-  function logout() {
-    isAuthenticated = false;
-    sessionStorage.removeItem('admin_auth');
-  }
 
   function loadData() {
     projects = projectStore.getAll();
@@ -146,21 +124,32 @@
       <div class="max-w-sm mx-auto mt-20">
         <div class="bg-white dark:bg-gray-900 rounded-xl p-8 border border-gray-200 dark:border-gray-800 shadow-sm">
           <h1 class="text-xl font-bold text-gray-900 dark:text-white mb-6 text-center">Administration</h1>
-          <form onsubmit={(e) => { e.preventDefault(); login(); }}>
+          <form
+            method="POST"
+            action="?/login"
+            use:enhance={() => {
+              loggingIn = true;
+              return async ({ update }) => {
+                await update();
+                loggingIn = false;
+              };
+            }}
+          >
             <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mot de passe</label>
             <input
               type="password"
               id="password"
-              bind:value={passwordInput}
+              name="password"
+              autocomplete="current-password"
               class="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 dark:text-white rounded-lg text-sm focus:outline-none focus:border-gray-400 dark:focus:border-gray-600 mb-4"
               placeholder="Entrez le mot de passe"
               autofocus
             />
-            {#if authError}
-              <p class="text-sm text-red-600 dark:text-red-400 mb-3">{authError}</p>
+            {#if form?.error}
+              <p class="text-sm text-red-600 dark:text-red-400 mb-3">{form.error}</p>
             {/if}
-            <button type="submit" class="w-full px-4 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg font-medium text-sm hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors">
-              Connexion
+            <button type="submit" disabled={loggingIn} class="w-full px-4 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg font-medium text-sm hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors disabled:opacity-60">
+              {loggingIn ? 'Connexion...' : 'Connexion'}
             </button>
           </form>
         </div>
@@ -177,9 +166,11 @@
           <a href="{base}/" class="text-sm text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
             Voir le site &rarr;
           </a>
-          <button onclick={logout} class="text-sm text-red-500 hover:text-red-700 transition-colors">
-            Deconnexion
-          </button>
+          <form method="POST" action="?/logout" use:enhance>
+            <button type="submit" class="text-sm text-red-500 hover:text-red-700 transition-colors">
+              Deconnexion
+            </button>
+          </form>
         </div>
       </div>
 
